@@ -1,8 +1,195 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Overtime Management";
 }
 
-<div class="text-center">
-    <h1 class="underline">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section id="head" class="min-h-screen flex flex-col justify-between">
+    <div class="container text-center mt-10 lg:absolute lg:top-1/3 lg:right-[8%] lg:w-1/3" id="headCaptions">
+     <h1 class="text-3xl lg:text-4xl font-bold">Overtime Management</h1>
+     <p class="lg:text-xl font-light mb-10 mt-3">
+      Lorem ipsum dolor sit amet consectetur. Ac eleifend pellentesque est sit. Libero praesent ornare posuere eu nulla ut quam lacus aenean.
+     </p>
+     <a
+      href="#"
+      class="bg-third px-5 py-2 lg:px-10 lg:rounded-full relative z-10 text-primary rounded-md text-xl shadow-md shadow-slate-500 hover:shadow-none hover:bg-secondary transition-all"
+      >Get Started</a
+     >
+    </div>
+    <img src="~/img/head-mobile.png" alt="" class="lg:hidden" />
+    <img src="~/img/head-dekstop.png" alt="" class="hidden lg:block" />
+   </section>
+   <section id="widget" class="bg-secondary h-28 lg:mx-32 -mt-4 lg:-mt-14 z-10 relative rounded-lg"></section>
+   <section id="about" class="lg:ms-32 mr-0 lg:my-24">
+    <h1 class="font-secondary text-4xl lg:text-5xl text-center my-10">About</h1>
+    <div class="lg:flex justify-between items-center">
+     <div class="lg:w-[40%] text-xl [&>p]:my-8 [&>p]:indent-10 text-justify px-[18px] lg:px-0">
+      <p>
+       Lorem ipsum dolor sit amet consectetur. Maecenas et feugiat erat aenean suspendisse. Leo et purus sit ut urna in. Nisi sagittis platea neque
+       consequat dolor eget fermentum. Sed ac rutrum nam quis. Hac sit cursus malesuada ipsum consectetur tempus. Ullamcorper egestas volutpat
+       fermentum volutpat in nulla ut. Id sed ultrices magna dis eu lacus aliquam neque.
+      </p>
+      <p>
+       Lorem ipsum dolor sit amet consectetur. Maecenas et feugiat erat aenean suspendisse. Leo et purus sit ut urna in. Lorem ipsum dolor sit amet
+       consectetur adipisicing elit. Quam maxime odio nulla voluptatem incidunt ea.
+      </p>
+     </div>
+     <div class="w-full lg:w-[45%] flex justify-end">
+      <img src="~/img/about.png" alt="" class="w-[80%] lg:w-full" />
+     </div>
+    </div>
+   </section>
+   <section id="faqs" class="lg:mx-32 mr-0 lg:my-24">
+    <h1 class="font-secondary text-4xl lg:text-5xl text-center my-10">FAQs</h1>
+    <div class="mx-[18px] lg-mx-0 flex flex-col gap-5 justify-between items-center">
+     <div class="relative w-full">
+      <div id="btn-faqs" class="flex justify-between gap-2 items-center bg-third px-5 py-3 text-white rounded-xl relative z-10">
+       <p class="text-lg">Lsadasd dolor sit amet, consectetur adipisicing elit. Ullam, beatae. ?</p>
+       <i class="fa-solid fa-angle-down text-3xl"></i>
+      </div>
+      <div
+       class="bg-secondary p-5 -mt-2 hidden text-white rounded-b-xl overflow-hidden transform scale-y-0 origin-top transition-all duration-500"
+       id="faqs-section-content"
+      >
+       <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique dolorum consequatur aliquam facilis amet facere, animi sapiente eveniet
+        doloribus cupiditate praesentium quae enim, ducimus quaerat consequuntur ipsa eaque voluptatem minus dolorem tempora culpa esse corrupti.
+        Fugit ratione nihil excepturi tenetur blanditiis in ad at! Praesentium omnis aspernatur nam neque minima.
+       </p>
+      </div>
+     </div>
+     <div class="relative w-full">
+      <div id="btn-faqs" class="flex justify-between gap-2 items-center bg-third px-5 py-3 text-white rounded-xl relative z-10">
+       <p class="text-lg">Lsadasd dolor sit amet, consectetur adipisicing elit. Ullam, beatae. ?</p>
+       <i class="fa-solid fa-angle-down text-3xl"></i>
+      </div>
+      <div
+       class="bg-secondary p-5 -mt-2 hidden text-white rounded-b-xl overflow-hidden transform scale-y-0 origin-top transition-all duration-500"
+       id="faqs-section-content"
+      >
+       <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique dolorum consequatur aliquam facilis amet facere, animi sapiente eveniet
+        doloribus cupiditate praesentium quae enim, ducimus quaerat consequuntur ipsa eaque voluptatem minus dolorem tempora culpa esse corrupti.
+        Fugit ratione nihil excepturi tenetur blanditiis in ad at! Praesentium omnis aspernatur nam neque minima.
+       </p>
+      </div>
+     </div>
+     <div class="relative w-full">
+      <div id="btn-faqs" class="flex justify-between gap-2 items-center bg-third px-5 py-3 text-white rounded-xl relative z-10">
+       <p class="text-lg">Lsadasd dolor sit amet, consectetur adipisicing elit. Ullam, beatae. ?</p>
+       <i class="fa-solid fa-angle-down text-3xl"></i>
+      </div>
+      <div
+       class="bg-secondary p-5 -mt-2 hidden text-white rounded-b-xl overflow-hidden transform scale-y-0 origin-top transition-all duration-500"
+       id="faqs-section-content"
+      >
+       <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique dolorum consequatur aliquam facilis amet facere, animi sapiente eveniet
+        doloribus cupiditate praesentium quae enim, ducimus quaerat consequuntur ipsa eaque voluptatem minus dolorem tempora culpa esse corrupti.
+        Fugit ratione nihil excepturi tenetur blanditiis in ad at! Praesentium omnis aspernatur nam neque minima.
+       </p>
+      </div>
+     </div>
+     <div class="relative w-full">
+      <div id="btn-faqs" class="flex justify-between gap-2 items-center bg-third px-5 py-3 text-white rounded-xl relative z-10">
+       <p class="text-lg">Lsadasd dolor sit amet, consectetur adipisicing elit. Ullam, beatae. ?</p>
+       <i class="fa-solid fa-angle-down text-3xl"></i>
+      </div>
+      <div
+       class="bg-secondary p-5 -mt-2 hidden text-white rounded-b-xl overflow-hidden transform scale-y-0 origin-top transition-all duration-500"
+       id="faqs-section-content"
+      >
+       <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique dolorum consequatur aliquam facilis amet facere, animi sapiente eveniet
+        doloribus cupiditate praesentium quae enim, ducimus quaerat consequuntur ipsa eaque voluptatem minus dolorem tempora culpa esse corrupti.
+        Fugit ratione nihil excepturi tenetur blanditiis in ad at! Praesentium omnis aspernatur nam neque minima.
+       </p>
+      </div>
+     </div>
+     <div class="relative w-full">
+      <div id="btn-faqs" class="flex justify-between gap-2 items-center bg-third px-5 py-3 text-white rounded-xl relative z-10">
+       <p class="text-lg">Lsadasd dolor sit amet, consectetur adipisicing elit. Ullam, beatae. ?</p>
+       <i class="fa-solid fa-angle-down text-3xl"></i>
+      </div>
+      <div
+       class="bg-secondary p-5 -mt-2 hidden text-white rounded-b-xl overflow-hidden transform scale-y-0 origin-top transition-all duration-500"
+       id="faqs-section-content"
+      >
+       <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique dolorum consequatur aliquam facilis amet facere, animi sapiente eveniet
+        doloribus cupiditate praesentium quae enim, ducimus quaerat consequuntur ipsa eaque voluptatem minus dolorem tempora culpa esse corrupti.
+        Fugit ratione nihil excepturi tenetur blanditiis in ad at! Praesentium omnis aspernatur nam neque minima.
+       </p>
+      </div>
+     </div>
+     <div class="relative w-full">
+      <div id="btn-faqs" class="flex justify-between gap-2 items-center bg-third px-5 py-3 text-white rounded-xl relative z-10">
+       <p class="text-lg">Lsadasd dolor sit amet, consectetur adipisicing elit. Ullam, beatae. ?</p>
+       <i class="fa-solid fa-angle-down text-3xl"></i>
+      </div>
+      <div
+       class="bg-secondary p-5 -mt-2 hidden text-white rounded-b-xl overflow-hidden transform scale-y-0 origin-top transition-all duration-500"
+       id="faqs-section-content"
+      >
+       <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Similique dolorum consequatur aliquam facilis amet facere, animi sapiente eveniet
+        doloribus cupiditate praesentium quae enim, ducimus quaerat consequuntur ipsa eaque voluptatem minus dolorem tempora culpa esse corrupti.
+        Fugit ratione nihil excepturi tenetur blanditiis in ad at! Praesentium omnis aspernatur nam neque minima.
+       </p>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section id="contact" class="lg:me-32 mr-0 lg:my-24">
+    <h1 class="font-secondary text-4xl lg:text-5xl text-center my-10">Contact</h1>
+    <div class="lg:flex justify-between items-center">
+     <div class="w-full lg:w-[45%] flex justify-start">
+      <img src="~/img/contact.png" alt="" class="w-[80%] lg:w-full" />
+     </div>
+     <div class="lg:w-[40%] text-xl [&>p]:my-8 [&>p]:indent-10 px-[18px] lg:px-0">
+      <div class="flex items-center">
+       <i class="fa-solid fa-chevron-left"></i>
+       <div class="border-b-2 border-slate-700 border-dashed w-full"></div>
+      </div>
+      <p class="text-center">
+       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse beatae odio aliquam minus accusantium eveniet placeat, quaerat laboriosam rem
+      </p>
+      <form>
+       <div class="relative z-0 w-full mb-6 group rounded-b-lg bg-secondary px-5 shadow-md shadow-slate-500">
+        <input
+         type="email"
+         name="floating_email"
+         id="floating_email"
+         class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+         placeholder=" "
+         required
+        />
+        <label
+         for="floating_email"
+         class="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-white peer-focus:bg-third peer-focus:p-[0.4rem] peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-10"
+         >Email address</label
+        >
+       </div>
+       <div class="relative z-0 w-full mb-6 group rounded-b-lg bg-secondary px-5 shadow-md shadow-slate-500">
+        <textarea
+         name="floating_message"
+         id="floating_message"
+         cols="30"
+         rows="4"
+         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+         placeholder=" "
+         required
+        ></textarea>
+        <label
+         for="floating_message"
+         class="peer-focus:font-medium absolute text-sm text-white dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-white peer-focus:bg-third peer-focus:p-[0.4rem] peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-10"
+         >Message</label
+        >
+       </div>
+       <div
+        class="bg-third rounded-xl text-center hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm w-full sm:w-auto px-5 py-2.5 dark:bg-third dark:hover:bg-bg-secondary dark:focus:ring-secondary shadow-md shadow-slate-500"
+       >
+        <button type="submit" class="text-white">Submit</button>
+       </div>
+      </form>
+     </div>
+    </div>
+   </section>
