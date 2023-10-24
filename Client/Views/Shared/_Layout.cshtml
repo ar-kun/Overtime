@@ -1,49 +1,115 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Client</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Client.styles.css" asp-append-version="true" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Client</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+ <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@ViewData["Title"]</title>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - Client - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jomolhari&display=swap" rel="stylesheet" />
+  <link href="https://fonts.cdnfonts.com/css/jsmath-cmmi10" rel="stylesheet" />
+
+  <!-- Font awosome -->
+  <link
+   rel="stylesheet"
+   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+   integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+   crossorigin="anonymous"
+   referrerpolicy="no-referrer"
+  />
+
+
+  <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+  
+ </head>
+ <body class="bg-repeat-y bg-contain" style="background-image: url('/img/bg.png')">
+  <header>
+   <nav class="hidden fixed lg:flex justify-end gap-14 w-full px-32 py-5 z-20 transition-all" id="navbar">
+    <ul class="flex justify-between gap-10 items-center text-2xl">
+     <li class="group">
+      <a
+       href="#home"
+       class="group-hover:text-secondary duration-700 after:block after:origin-left after:scale-x-0 after:border-b-4 after:border-third after:pb-1 after:transition-all after:content-[''] hover:after:scale-x-100"
+       >Home</a
+      >
+     </li>
+     <li class="group">
+      <a
+       href="#"
+       class="group-hover:text-secondary duration-700 after:block after:origin-left after:scale-x-0 after:border-b-4 after:border-third after:pb-1 after:transition-all after:content-[''] hover:after:scale-x-100"
+       >About</a
+      >
+     </li>
+     <li class="group">
+      <a
+       href=""
+       class="group-hover:text-secondary duration-700 after:block after:origin-left after:scale-x-0 after:border-b-4 after:border-third after:pb-1 after:transition-all after:content-[''] hover:after:scale-x-100"
+       >FAQs</a
+      >
+     </li>
+     <li class="group">
+      <a
+       href=""
+       class="group-hover:text-secondary duration-700 after:block after:origin-left after:scale-x-0 after:border-b-4 after:border-third after:pb-1 after:transition-all after:content-[''] hover:after:scale-x-100"
+       >Contact</a
+      >
+     </li>
+    </ul>
+    <div class="w-14 h-1/4 bg-white rounded-full">
+     <img src="~/img/profile.png" alt="" class="" />
+    </div>
+   </nav>
+  </header>
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+  <footer class="h-44 bg-secondary lg:px-32 py-10 text-white">
+   <div class="container flex gap-10">
+    <div class="w-[40%] flex gap-5">
+     <i class="fa-solid fa-location-dot text-2xl"></i>
+     <p>APL Tower lt.37 Suite 1-8 Jl. Letjen S. Parman Kav. 28 Kel. Tanjung Duren Selatan Kec. Grogol Petamburan Kota Administrasi Jakarta Barat</p>
+    </div>
+    <div class="w-[15%] flex flex-col gap-3">
+     <div class="flex items-center gap-5">
+      <i class="fa-brands fa-whatsapp text-2xl"></i>
+      <p>+62 811 19 500900</p>
+     </div>
+     <div class="flex items-center gap-5">
+      <i class="fa-solid fa-phone text-2xl"></i>
+      <p>+62 21 2934 5777</p>
+     </div>
+    </div>
+    <div class="w-[15%] flex gap-5 text-third">
+     <div
+      class="h-12 w-12 rounded-full bg-[#D1D9E5] flex items-center justify-center shadow-md shadow-slate-500 hover:bg-third hover:text-white hover:shadow-none"
+     >
+      <i class="fa-brands fa-linkedin-in text-2xl"></i>
+     </div>
+     <div
+      class="h-12 w-12 rounded-full bg-[#D1D9E5] flex items-center justify-center shadow-md shadow-slate-500 hover:bg-third hover:text-white hover:shadow-none"
+     >
+      <i class="fa-brands fa-instagram text-2xl"></i>
+     </div>
+     <div
+      class="h-12 w-12 rounded-full bg-[#D1D9E5] flex items-center justify-center shadow-md shadow-slate-500 hover:bg-third hover:text-white hover:shadow-none"
+     >
+      <i class="fa-brands fa-twitter text-2xl"></i>
+     </div>
+    </div>
+    <div class="w-[20%] h-20">
+     <img src="~/img/logo.png" alt="" class="-mt-5" />
+    </div>
+   </div>
+   <p class="text-center mt-5">Copyright by arkun. 2023 Alright</p>
+  </footer>
+  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="~/js/site.js" asp-append-version="true"></script>
+  @await RenderSectionAsync("Scripts", required: false)
+ </body>
 </html>
