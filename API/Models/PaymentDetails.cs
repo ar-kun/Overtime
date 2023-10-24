@@ -3,7 +3,7 @@
 namespace API.Models
 {
     // PaymentDetails entity
-    [Table(name: "tb_tr_payment_details")]
+    [Table(name: "tb_m_payment_details")]
     public class PaymentDetails : BaseEntity
     {
         [Column(name: "total_pay", TypeName = "nvarchar(30)")]
