@@ -35,8 +35,7 @@ namespace API.Controllers
         public IActionResult ForgotPassword(string email)
         {
             // Check if email already exist or not
-            var employees = _employeeRepository.GetAll();
-            var employee = employees.FirstOrDefault(e => e.Email == email);
+            var employee = _employeeRepository.GetByEmail(email); 
             if (employee is null)
             {
                 return NotFound(new ResponseErrorHandler
@@ -77,8 +76,7 @@ namespace API.Controllers
             try
             {
                 // Get account by email
-                var employees = _employeeRepository.GetAll();
-                var employee = employees.FirstOrDefault(e => e.Email == changePasswordDto.Email);
+                var employee = _employeeRepository.GetByEmail(changePasswordDto.Email);
                 var account = _accountRepository.GetByGuid(employee.Guid);
                 // Check if OTP is valid
                 if (account == null || account.Otp != changePasswordDto.Otp)
@@ -184,7 +182,7 @@ namespace API.Controllers
                         PhoneNumber = registerDto.PhoneNumber,
                         Salary = registerDto.Salary
                     };
-                    employeeToCreate.Nik = GenerateHandler.GenerateNik(_employeeRepository.GetLastNik());
+                    employeeToCreate.Nik = GenerateHandler.GenerateNIK(_employeeRepository.GetLastNik());
                     var employeeResult = _employeeRepository.Create(employeeToCreate);
                     // Create a new account object
                     var accountToCreate = new Account

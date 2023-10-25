@@ -1,5 +1,4 @@
-﻿using API.Models;
-
+﻿
 namespace API.Utilities.Handlers
 {
     public class GenerateHandler
@@ -18,7 +17,6 @@ namespace API.Utilities.Handlers
                 lastNikInt++;
                 return lastNikInt.ToString().PadLeft(6, '0');
             }
-            return Nik;
         }
     }
 }
