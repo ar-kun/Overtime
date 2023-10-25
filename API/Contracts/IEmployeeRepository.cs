@@ -8,5 +8,7 @@ namespace API.Contracts
         string? GetLastNik();
 
         Employee? GetByEmail(string email);
+
+        Guid GetManagerGuid(string nik);
     }
 }

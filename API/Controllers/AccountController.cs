@@ -35,7 +35,7 @@ namespace API.Controllers
         public IActionResult ForgotPassword(string email)
         {
             // Check if email already exist or not
-            var employee = _employeeRepository.GetByEmail(email); 
+            var employee = _employeeRepository.GetByEmail(email);
             if (employee is null)
             {
                 return NotFound(new ResponseErrorHandler
@@ -170,7 +170,7 @@ namespace API.Controllers
                             Message = "Password and confirm password do not match"
                         });
                     }
-                    // Create a new employee object 
+                    // Create a new employee object
                     var employeeToCreate = new Employee
                     {
                         FirstName = registerDto.FirstName,
@@ -183,7 +183,10 @@ namespace API.Controllers
                         Salary = registerDto.Salary
                     };
                     employeeToCreate.Nik = GenerateHandler.GenerateNIK(_employeeRepository.GetLastNik());
+                    employeeToCreate.ManagerGuid = _employeeRepository.GetManagerGuid(registerDto.ManagerNik);
+
                     var employeeResult = _employeeRepository.Create(employeeToCreate);
+
                     // Create a new account object
                     var accountToCreate = new Account
                     {
@@ -195,6 +198,7 @@ namespace API.Controllers
                     };
                     accountToCreate.Password = HashHandler.HashPassword(accountToCreate.Password);
                     var accountResult = _accountRepository.Create(accountToCreate);
+
                     // Create a new account role object
                     var accountRoleToCreatee = new AccountRole
                     {
@@ -202,9 +206,11 @@ namespace API.Controllers
                         RoleGuid = _roleRepository.GetDefaultRoleGuid() ?? throw new Exception("Default Role Not Found")
                     };
                     var accountRoleResult = _accountRoleRepository.Create(accountRoleToCreatee);
+
                     // Save changes to database
                     _context.SaveChanges();
                     transaction.Commit();
+
                     // Return a success response
                     return Ok(new ResponseOKHandler<string>("User registered successfully"));
                 }
