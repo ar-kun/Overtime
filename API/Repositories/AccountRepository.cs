@@ -9,5 +9,10 @@ namespace API.Repositories
     public class AccountRepository : GeneralRepository<Account>, IAccountRepository
     {
         public AccountRepository(OvertimeDbContext context) : base(context) { }
+
+        public OvertimeDbContext GetContext()
+        {
+            return _context;
+        }
     }
 }

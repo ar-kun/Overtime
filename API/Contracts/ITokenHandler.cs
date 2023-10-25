@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using API.DTOs.Accounts;
+using System.Security.Claims;
 
 namespace API.Contracts
 {
@@ -6,5 +7,8 @@ namespace API.Contracts
     {
         // Defines method to generates a JWT token based on the specified claims
         string Generate(IEnumerable<Claim> claims);
+
+        // Defines method to extract claims form JWT token
+        ClaimsDto ExtractClaimsFromJwt(string token);
     }
 }
