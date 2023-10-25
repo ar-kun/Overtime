@@ -1,5 +1,5 @@
 ﻿using API.Contracts;
-using API.DTOs.AccountRoles;
+using API.DTOs.Overtimes;
 using API.Models;
 using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Mvc;
@@ -9,20 +9,20 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AccountRoleController : ControllerBase
+    public class OvertimeController : ControllerBase
     {
-        private readonly IAccountRoleRepository _accountRoleRepository;
+        private readonly IOvertimeRepository _overtimeRepository;
 
-        public AccountRoleController(IAccountRoleRepository accountRoleRepository)
+        public OvertimeController(IOvertimeRepository overtimeRepository)
         {
-            _accountRoleRepository = accountRoleRepository;
+            _overtimeRepository = overtimeRepository;
         }
 
-        // Endpoint to retrieve all AccountRole data
+        // Endpoint to retrieve all Overtime data
         [HttpGet]
         public IActionResult GetAll()
         {
-            var result = _accountRoleRepository.GetAll();
+            var result = _overtimeRepository.GetAll();
             if (!result.Any())
             {
                 // Mengembalikan pesan jika tidak ada data yang ditemukan
@@ -33,18 +33,16 @@ namespace API.Controllers
                     Message = "Data Not Found"
                 });
             }
+            var data = result.Select(x => (OvertimeDto)x);
 
-            var data = result.Select(x => (AccountRoleDto)x);
-
-            // Mengembalikan data Employee jika ada
-            return Ok(new ResponseOKHandler<IEnumerable<AccountRoleDto>>(data));
+            return Ok(new ResponseOKHandler<IEnumerable<OvertimeDto>>(data));
         }
 
-        // Endpoint to retrieve AccountRole data based on GUID
+        // Endpoint to retrieve Overtime data based on GUID
         [HttpGet("{guid}")]
         public IActionResult GetByGuid(Guid guid)
         {
-            var result = _accountRoleRepository.GetByGuid(guid);
+            var result = _overtimeRepository.GetByGuid(guid);
             if (result is null)
             {
                 // Mengembalikan pesan jika ID tidak ditemukan
@@ -56,19 +54,19 @@ namespace API.Controllers
                 });
             }
             // Mengembalikan data Employee jika ditemukan
-            return Ok(new ResponseOKHandler<AccountRoleDto>((AccountRoleDto)result));
+            return Ok(new ResponseOKHandler<OvertimeDto>((OvertimeDto)result));
         }
 
-        // Endpoint for creating new AccountRole data
+        // Endpoint for creating new Overtime data
         [HttpPost]
-        public IActionResult Create(CreateAccountRoleDto accountRoleDto)
+        public IActionResult Create(StoreOvertimeDto createOvertimeDto)
         {
             try
             {
-                var result = _accountRoleRepository.Create(accountRoleDto);
+                var result = _overtimeRepository.Create(createOvertimeDto);
 
-                // Returns the AccountRole data that was just created
-                return Ok(new ResponseOKHandler<AccountRoleDto>((AccountRoleDto)result));
+                // Mengembalikan data Employee yang baru saja dibuat
+                return Ok(new ResponseOKHandler<OvertimeDto>((OvertimeDto)result));
             }
             catch (ExceptionHandler ex)
             {
@@ -82,13 +80,13 @@ namespace API.Controllers
             }
         }
 
-        // Endpoint for updating AccountRole data based on GUID
+        // Endpoint to update Overtime data based on GUID
         [HttpPut]
-        public IActionResult Update(AccountRoleDto accountRoleDto)
+        public IActionResult Update(StoreOvertimeDto updateOvertimeDto)
         {
             try
             {
-                var entity = _accountRoleRepository.GetByGuid(accountRoleDto.Guid);
+                var entity = _overtimeRepository.GetByGuid(updateOvertimeDto.Guid);
                 if (entity is null)
                 {
                     return NotFound(new ResponseErrorHandler
@@ -99,11 +97,10 @@ namespace API.Controllers
                     });
                 }
 
-                AccountRole toUpdate = accountRoleDto;
-                toUpdate.CreatedDate = entity.CreatedDate;
-                _accountRoleRepository.Update(toUpdate);
+                Overtime toUpdate = updateOvertimeDto;
+                _overtimeRepository.Update(toUpdate);
 
-                return Ok(new ResponseOKHandler<AccountRoleDto>("Data updated successfully")); // Mengembalikan pesan sukses jika pembaruan berhasil
+                return Ok(new ResponseOKHandler<OvertimeDto>("Data updated successfully")); // Mengembalikan pesan sukses jika pembaruan berhasil
             }
             catch (ExceptionHandler ex)
             {
@@ -117,14 +114,14 @@ namespace API.Controllers
             }
         }
 
-        // Endpoint to delete AccountRole data based on GUID
+        // Endpoint to delete Overtime data based on GUID
         [HttpDelete("{guid}")]
         public IActionResult Delete(Guid guid)
         {
             try
             {
-                var existingAccountRole = _accountRoleRepository.GetByGuid(guid);
-                if (existingAccountRole is null)
+                var existingBooking = _overtimeRepository.GetByGuid(guid);
+                if (existingBooking is null)
                 {
                     return NotFound(new ResponseErrorHandler
                     {
@@ -133,9 +130,10 @@ namespace API.Controllers
                         Message = "Id Not Found"
                     });
                 }
-                _accountRoleRepository.Delete(existingAccountRole);
 
-                return Ok(new ResponseOKHandler<AccountRoleDto>("Data deleted successfully"));  // Mengembalikan pesan sukses jika penghapusan berhasil
+                _overtimeRepository.Delete(existingBooking);
+
+                return Ok(new ResponseOKHandler<OvertimeDto>("Data deleted successfully"));  // Mengembalikan pesan sukses jika penghapusan berhasil
             }
             catch (ExceptionHandler ex)
             {

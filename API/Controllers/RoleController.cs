@@ -19,14 +19,14 @@ namespace API.Controllers
             _roleRepository = roleRepository;
         }
 
-        // Endpoint untuk mengambil semua data Role
+        // Endpoint to retrieve all Role data
         [HttpGet]
         public IActionResult GetAll()
         {
             var result = _roleRepository.GetAll();
             if (!result.Any())
             {
-                // Mengembalikan pesan jika tidak ada data yang ditemukan
+                // Returns a message if no data is found
                 return NotFound(new ResponseErrorHandler
                 {
                     Code = StatusCodes.Status404NotFound,
@@ -40,7 +40,7 @@ namespace API.Controllers
             return Ok(new ResponseOKHandler<IEnumerable<RoleDto>>(data));  // Mengembalikan data Role jika ada
         }
 
-        // Endpoint untuk mengambil data Role berdasarkan GUID
+        // Endpoint to retrieve Role data based on GUID
         [HttpGet("{guid}")]
         public IActionResult GetByGuid(Guid guid)
         {
@@ -52,12 +52,12 @@ namespace API.Controllers
                     Code = StatusCodes.Status404NotFound,
                     Status = HttpStatusCode.NotFound.ToString(),
                     Message = "ID Not Found"
-                });  // Mengembalikan pesan jika ID tidak ditemukan
+                });  // Returns a message if the ID is not found
             }
             return Ok(new ResponseOKHandler<RoleDto>((RoleDto)result));  // Mengembalikan data Role jika ditemukan
         }
 
-        // Endpoint untuk membuat data Role baru
+        // Endpoint for creating new Role data
         [HttpPost]
         public IActionResult Create(CreateRoleDto roleDto)
         {
@@ -79,7 +79,7 @@ namespace API.Controllers
             }
         }
 
-        // Endpoint untuk memperbarui data Role berdasarkan GUID
+        // Endpoint to update Role data based on GUID
         [HttpPut]
         [Authorize(Roles = "admin")]
         public IActionResult Update(RoleDto roleDto)
@@ -116,7 +116,7 @@ namespace API.Controllers
             }
         }
 
-        // Endpoint untuk menghapus data Role berdasarkan GUID
+        // Endpoint to delete Role data based on GUID
         [HttpDelete("{guid}")]
         public IActionResult Delete(Guid guid)
         {
