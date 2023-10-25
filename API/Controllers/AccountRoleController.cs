@@ -25,7 +25,7 @@ namespace API.Controllers
             var result = _accountRoleRepository.GetAll();
             if (!result.Any())
             {
-                // Mengembalikan pesan jika tidak ada data yang ditemukan
+                // Returns a message if no data is found
                 return NotFound(new ResponseErrorHandler
                 {
                     Code = StatusCodes.Status404NotFound,
@@ -36,7 +36,7 @@ namespace API.Controllers
 
             var data = result.Select(x => (AccountRoleDto)x);
 
-            // Mengembalikan data Employee jika ada
+            // Returns AccountRole data if any
             return Ok(new ResponseOKHandler<IEnumerable<AccountRoleDto>>(data));
         }
 
@@ -103,7 +103,7 @@ namespace API.Controllers
                 toUpdate.CreatedDate = entity.CreatedDate;
                 _accountRoleRepository.Update(toUpdate);
 
-                return Ok(new ResponseOKHandler<AccountRoleDto>("Data updated successfully")); // Mengembalikan pesan sukses jika pembaruan berhasil
+                return Ok(new ResponseOKHandler<AccountRoleDto>("Data updated successfully")); // Returns a success message if the update is successful
             }
             catch (ExceptionHandler ex)
             {
@@ -135,7 +135,7 @@ namespace API.Controllers
                 }
                 _accountRoleRepository.Delete(existingAccountRole);
 
-                return Ok(new ResponseOKHandler<AccountRoleDto>("Data deleted successfully"));  // Mengembalikan pesan sukses jika penghapusan berhasil
+                return Ok(new ResponseOKHandler<AccountRoleDto>("Data deleted successfully"));  // Returns a success message if deletion is successful
             }
             catch (ExceptionHandler ex)
             {

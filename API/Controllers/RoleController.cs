@@ -37,7 +37,7 @@ namespace API.Controllers
 
             var data = result.Select(x => (RoleDto)x);
 
-            return Ok(new ResponseOKHandler<IEnumerable<RoleDto>>(data));  // Mengembalikan data Role jika ada
+            return Ok(new ResponseOKHandler<IEnumerable<RoleDto>>(data));  // Returns Role data if any
         }
 
         // Endpoint to retrieve Role data based on GUID
@@ -54,7 +54,7 @@ namespace API.Controllers
                     Message = "ID Not Found"
                 });  // Returns a message if the ID is not found
             }
-            return Ok(new ResponseOKHandler<RoleDto>((RoleDto)result));  // Mengembalikan data Role jika ditemukan
+            return Ok(new ResponseOKHandler<RoleDto>((RoleDto)result));  // Returns Role data if found
         }
 
         // Endpoint for creating new Role data
@@ -65,7 +65,7 @@ namespace API.Controllers
             {
                 var result = _roleRepository.Create(roleDto);
 
-                return Ok(new ResponseOKHandler<RoleDto>((RoleDto)result)); // Mengembalikan data Role yang baru saja dibuat
+                return Ok(new ResponseOKHandler<RoleDto>((RoleDto)result)); // Returns the Role data that was just created
             }
             catch (ExceptionHandler ex)
             {
@@ -102,7 +102,7 @@ namespace API.Controllers
 
                 _roleRepository.Update(toUpdate);
 
-                return Ok(new ResponseOKHandler<RoleDto>("Data updated successfully")); // Mengembalikan pesan sukses jika pembaruan berhasil
+                return Ok(new ResponseOKHandler<RoleDto>("Data updated successfully")); // Returns a success message if the update is successful
             }
             catch (ExceptionHandler ex)
             {
@@ -135,7 +135,7 @@ namespace API.Controllers
 
                 _roleRepository.Delete(existingRole);
 
-                return Ok(new ResponseOKHandler<RoleDto>("Data deleted successfully"));  // Mengembalikan pesan sukses jika penghapusan berhasil
+                return Ok(new ResponseOKHandler<RoleDto>("Data deleted successfully"));  // Returns a success message if deletion is successful
             }
             catch (ExceptionHandler ex)
             {

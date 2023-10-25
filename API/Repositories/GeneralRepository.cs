@@ -27,7 +27,7 @@ namespace API.Repositories
         public TEntity? GetByGuid(Guid guid)
         {
             var entity = _context.Set<TEntity>().Find(guid);
-            _context.ChangeTracker.Clear();
+            _context.ChangeTracker.Clear(); 
             return entity;
         }
 
@@ -37,8 +37,8 @@ namespace API.Repositories
         {
             try
             {
-                _context.Set<TEntity>().Add(entity);
-                _context.SaveChanges();
+                _context.Set<TEntity>().Add(entity); 
+                _context.SaveChanges(); 
                 return entity;
             }
             catch (Exception ex)
@@ -66,9 +66,9 @@ namespace API.Repositories
         {
             try
             {
-                _context.Set<TEntity>().Update(entity);
-                _context.SaveChanges();
-                return true;
+                _context.Set<TEntity>().Update(entity); 
+                _context.SaveChanges(); 
+                return true; 
             }
             catch (Exception ex)
             {
@@ -82,9 +82,9 @@ namespace API.Repositories
         {
             try
             {
-                _context.Set<TEntity>().Remove(entity);
-                _context.SaveChanges();
-                return true;
+                _context.Set<TEntity>().Remove(entity); 
+                _context.SaveChanges(); 
+                return true; 
             }
             catch (Exception ex)
             {
