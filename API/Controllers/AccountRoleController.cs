@@ -18,14 +18,14 @@ namespace API.Controllers
             _accountRoleRepository = accountRoleRepository;
         }
 
-        // Endpoint untuk mengambil semua data AccountRole
+        // Endpoint to retrieve all AccountRole data
         [HttpGet]
         public IActionResult GetAll()
         {
             var result = _accountRoleRepository.GetAll();
             if (!result.Any())
             {
-                // Mengembalikan pesan jika tidak ada data yang ditemukan
+                // Returns a message if no data is found
                 return NotFound(new ResponseErrorHandler
                 {
                     Code = StatusCodes.Status404NotFound,
@@ -36,11 +36,11 @@ namespace API.Controllers
 
             var data = result.Select(x => (AccountRoleDto)x);
 
-            // Mengembalikan data Employee jika ada
+            // Returns AccountRole data if any
             return Ok(new ResponseOKHandler<IEnumerable<AccountRoleDto>>(data));
         }
 
-        // Endpoint untuk mengambil data AccountRole berdasarkan GUID
+        // Endpoint to retrieve AccountRole data based on GUID
         [HttpGet("{guid}")]
         public IActionResult GetByGuid(Guid guid)
         {
@@ -59,7 +59,7 @@ namespace API.Controllers
             return Ok(new ResponseOKHandler<AccountRoleDto>((AccountRoleDto)result));
         }
 
-        // Endpoint untuk membuat data AccountRole baru
+        // Endpoint for creating new AccountRole data
         [HttpPost]
         public IActionResult Create(CreateAccountRoleDto accountRoleDto)
         {
@@ -67,7 +67,7 @@ namespace API.Controllers
             {
                 var result = _accountRoleRepository.Create(accountRoleDto);
 
-                // Mengembalikan data Employee yang baru saja dibuat
+                // Returns the AccountRole data that was just created
                 return Ok(new ResponseOKHandler<AccountRoleDto>((AccountRoleDto)result));
             }
             catch (ExceptionHandler ex)
@@ -82,7 +82,7 @@ namespace API.Controllers
             }
         }
 
-        // Endpoint untuk memperbarui data AccountRole berdasarkan GUID
+        // Endpoint for updating AccountRole data based on GUID
         [HttpPut]
         public IActionResult Update(AccountRoleDto accountRoleDto)
         {
@@ -103,7 +103,7 @@ namespace API.Controllers
                 toUpdate.CreatedDate = entity.CreatedDate;
                 _accountRoleRepository.Update(toUpdate);
 
-                return Ok(new ResponseOKHandler<AccountRoleDto>("Data updated successfully")); // Mengembalikan pesan sukses jika pembaruan berhasil
+                return Ok(new ResponseOKHandler<AccountRoleDto>("Data updated successfully")); // Returns a success message if the update is successful
             }
             catch (ExceptionHandler ex)
             {
@@ -117,7 +117,7 @@ namespace API.Controllers
             }
         }
 
-        // Endpoint untuk menghapus data AccountRole berdasarkan GUID
+        // Endpoint to delete AccountRole data based on GUID
         [HttpDelete("{guid}")]
         public IActionResult Delete(Guid guid)
         {
@@ -135,7 +135,7 @@ namespace API.Controllers
                 }
                 _accountRoleRepository.Delete(existingAccountRole);
 
-                return Ok(new ResponseOKHandler<AccountRoleDto>("Data deleted successfully"));  // Mengembalikan pesan sukses jika penghapusan berhasil
+                return Ok(new ResponseOKHandler<AccountRoleDto>("Data deleted successfully"));  // Returns a success message if deletion is successful
             }
             catch (ExceptionHandler ex)
             {
