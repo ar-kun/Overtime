@@ -29,5 +29,21 @@ namespace API.Repositories
             return _context.Set<Employee>()
                 .FirstOrDefault(e => e.Email == email);
         }
+
+        // Get Manager Guid by Manager's NIK
+        public Guid GetManagerGuid(string nik)
+        {
+            // Take one employee data
+            var employee = _context.Set<Employee>()
+                .Where(e => e.Nik == nik)
+                .SingleOrDefault();
+
+            if (employee != null)
+            {
+                return employee.Guid;
+            }
+
+            throw new Exception("Manager not found");
+        }
     }
 }
