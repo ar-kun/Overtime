@@ -1,8 +1,7 @@
 ﻿using API.Contracts;
-using API.DTOs.Roles;
+using API.DTOs.Overtimes;
 using API.Models;
 using API.Utilities.Handlers;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -10,23 +9,23 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class RoleController : ControllerBase
+    public class OvertimeController : ControllerBase
     {
-        private readonly IRoleRepository _roleRepository;
+        private readonly IOvertimeRepository _overtimeRepository;
 
-        public RoleController(IRoleRepository roleRepository)
+        public OvertimeController(IOvertimeRepository overtimeRepository)
         {
-            _roleRepository = roleRepository;
+            _overtimeRepository = overtimeRepository;
         }
 
-        // Endpoint to retrieve all Role data
+        // Endpoint to retrieve all Overtime data
         [HttpGet]
         public IActionResult GetAll()
         {
-            var result = _roleRepository.GetAll();
+            var result = _overtimeRepository.GetAll();
             if (!result.Any())
             {
-                // Returns a message if no data is found
+                // Mengembalikan pesan jika tidak ada data yang ditemukan
                 return NotFound(new ResponseErrorHandler
                 {
                     Code = StatusCodes.Status404NotFound,
@@ -34,38 +33,40 @@ namespace API.Controllers
                     Message = "Data Not Found"
                 });
             }
+            var data = result.Select(x => (OvertimeDto)x);
 
-            var data = result.Select(x => (RoleDto)x);
-
-            return Ok(new ResponseOKHandler<IEnumerable<RoleDto>>(data));  // Returns Role data if any
+            return Ok(new ResponseOKHandler<IEnumerable<OvertimeDto>>(data));
         }
 
-        // Endpoint to retrieve Role data based on GUID
+        // Endpoint to retrieve Overtime data based on GUID
         [HttpGet("{guid}")]
         public IActionResult GetByGuid(Guid guid)
         {
-            var result = _roleRepository.GetByGuid(guid);
+            var result = _overtimeRepository.GetByGuid(guid);
             if (result is null)
             {
+                // Mengembalikan pesan jika ID tidak ditemukan
                 return NotFound(new ResponseErrorHandler
                 {
                     Code = StatusCodes.Status404NotFound,
                     Status = HttpStatusCode.NotFound.ToString(),
                     Message = "ID Not Found"
-                });  // Returns a message if the ID is not found
+                });
             }
-            return Ok(new ResponseOKHandler<RoleDto>((RoleDto)result));  // Returns Role data if found
+            // Mengembalikan data Employee jika ditemukan
+            return Ok(new ResponseOKHandler<OvertimeDto>((OvertimeDto)result));
         }
 
-        // Endpoint for creating new Role data
+        // Endpoint for creating new Overtime data
         [HttpPost]
-        public IActionResult Create(CreateRoleDto roleDto)
+        public IActionResult Create(StoreOvertimeDto createOvertimeDto)
         {
             try
             {
-                var result = _roleRepository.Create(roleDto);
+                var result = _overtimeRepository.Create(createOvertimeDto);
 
-                return Ok(new ResponseOKHandler<RoleDto>((RoleDto)result)); // Returns the Role data that was just created
+                // Mengembalikan data Employee yang baru saja dibuat
+                return Ok(new ResponseOKHandler<OvertimeDto>((OvertimeDto)result));
             }
             catch (ExceptionHandler ex)
             {
@@ -79,14 +80,13 @@ namespace API.Controllers
             }
         }
 
-        // Endpoint to update Role data based on GUID
+        // Endpoint to update Overtime data based on GUID
         [HttpPut]
-        [Authorize(Roles = "admin")]
-        public IActionResult Update(RoleDto roleDto)
+        public IActionResult Update(StoreOvertimeDto updateOvertimeDto)
         {
             try
             {
-                var entity = _roleRepository.GetByGuid(roleDto.Guid);
+                var entity = _overtimeRepository.GetByGuid(updateOvertimeDto.Guid);
                 if (entity is null)
                 {
                     return NotFound(new ResponseErrorHandler
@@ -97,12 +97,10 @@ namespace API.Controllers
                     });
                 }
 
-                Role toUpdate = roleDto;
-                toUpdate.CreatedDate = entity.CreatedDate;
+                Overtime toUpdate = updateOvertimeDto;
+                _overtimeRepository.Update(toUpdate);
 
-                _roleRepository.Update(toUpdate);
-
-                return Ok(new ResponseOKHandler<RoleDto>("Data updated successfully")); // Returns a success message if the update is successful
+                return Ok(new ResponseOKHandler<OvertimeDto>("Data updated successfully")); // Mengembalikan pesan sukses jika pembaruan berhasil
             }
             catch (ExceptionHandler ex)
             {
@@ -116,14 +114,14 @@ namespace API.Controllers
             }
         }
 
-        // Endpoint to delete Role data based on GUID
+        // Endpoint to delete Overtime data based on GUID
         [HttpDelete("{guid}")]
         public IActionResult Delete(Guid guid)
         {
             try
             {
-                var existingRole = _roleRepository.GetByGuid(guid);
-                if (existingRole is null)
+                var existingBooking = _overtimeRepository.GetByGuid(guid);
+                if (existingBooking is null)
                 {
                     return NotFound(new ResponseErrorHandler
                     {
@@ -133,9 +131,9 @@ namespace API.Controllers
                     });
                 }
 
-                _roleRepository.Delete(existingRole);
+                _overtimeRepository.Delete(existingBooking);
 
-                return Ok(new ResponseOKHandler<RoleDto>("Data deleted successfully"));  // Returns a success message if deletion is successful
+                return Ok(new ResponseOKHandler<OvertimeDto>("Data deleted successfully"));  // Mengembalikan pesan sukses jika penghapusan berhasil
             }
             catch (ExceptionHandler ex)
             {

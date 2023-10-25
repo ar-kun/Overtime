@@ -4,17 +4,19 @@ namespace API.Utilities.Handlers
 {
     public class GenerateHandler
     {
-        public static string GenerateNik(Employee employee)
+        public static string GenerateNIK(string? lastNik)
         {
-            // Default value
-            string Nik = "111111";
-
-            // Check if there is any data employee in the table
-            if (employee is not null)
+            // If there is no previous data
+            if (string.IsNullOrEmpty(lastNik))
             {
-                // Convert employee Nik to int and increment it by 1
-                int generateNik = int.Parse(employee.Nik);
-                Nik = (generateNik + 1).ToString();
+                return "111111";
+            }
+            else
+            {
+                // If there is data, add 1 to the last NIK.
+                int lastNikInt = Convert.ToInt32(lastNik);
+                lastNikInt++;
+                return lastNikInt.ToString().PadLeft(6, '0');
             }
             return Nik;
         }
