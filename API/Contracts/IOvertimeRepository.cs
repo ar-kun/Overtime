@@ -1,0 +1,9 @@
+﻿using API.Models;
+
+namespace API.Contracts
+{
+    // Defines an interface IOvertimeRepository that inherits from the IGeneralRepository<Overtime> interface
+    public interface IOvertimeRepository : IGeneralRepository<Overtime>
+    {
+    }
+}
