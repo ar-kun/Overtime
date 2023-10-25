@@ -2,9 +2,9 @@
 
 namespace API.Models
 {
-    // PaymentDetails entity
+    // PaymentDetail entity
     [Table(name: "tb_m_payment_details")]
-    public class PaymentDetails : BaseEntity
+    public class PaymentDetail : BaseEntity
     {
         [Column(name: "total_pay", TypeName = "nvarchar(30)")]
         public string TotalPay { get; set; }
@@ -16,6 +16,6 @@ namespace API.Models
         public DateTime ModifiedDate { get; set; }
 
         // Cardinality
-        public ICollection<Overtime>? Overtimes { get; set; }
+        public Overtime? Overtime { get; set; }
     }
 }

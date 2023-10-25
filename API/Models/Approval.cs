@@ -7,9 +7,6 @@ namespace API.Models
     [Table(name: "tb_m_approvals")]
     public class Approval : BaseEntity
     {
-        [Column(name: "overtime_guid")]
-        public Guid OvertimeGuid { get; set; }
-
         [Column(name: "approval_status")]
         public ApprovalLevel ApprovalStatus { get; set; }
 

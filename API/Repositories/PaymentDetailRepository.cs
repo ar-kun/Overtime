@@ -6,8 +6,8 @@ namespace API.Repositories
 {
     // Defines PaymentDetailsRepository that inherits from GeneralRepository<PaymentDetails>
     // Implements the IPaymentDetailsRepository interface
-    public class PaymentDetailsRepository : GeneralRepository<PaymentDetails>, IPaymentDetailsRepository
+    public class PaymentDetailRepository : GeneralRepository<PaymentDetail>, IPaymentDetailRepository
     {
-        public PaymentDetailsRepository(OvertimeDbContext context) : base(context) { }
+        public PaymentDetailRepository(OvertimeDbContext context) : base(context) { }
     }
 }

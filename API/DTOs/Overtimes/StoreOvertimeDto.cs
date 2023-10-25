@@ -7,7 +7,6 @@ namespace API.DTOs.Overtimes
     {
         public Guid Guid { get; set; }
         public Guid EmployeeGuid { get; set; }
-        public Guid PaymentDetailGuid { get; set; }
         public DateTime DateRequest { get; set; }
         public int Duration { get; set; }
         public StatusLevel Status { get; set; }
@@ -21,7 +20,6 @@ namespace API.DTOs.Overtimes
             {
                 Guid = storeOvertimeDto.Guid,
                 EmployeeGuid = storeOvertimeDto.EmployeeGuid,
-                PaymentDetailsGuid = storeOvertimeDto.PaymentDetailGuid,
                 DateRequest = storeOvertimeDto.DateRequest,
                 Duration = storeOvertimeDto.Duration,
                 Status = storeOvertimeDto.Status,

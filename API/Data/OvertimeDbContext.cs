@@ -16,7 +16,7 @@ namespace API.Data
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Overtime> Overtimes { get; set; }
         public DbSet<Approval> Approvals { get; set; }
-        public DbSet<PaymentDetails> PaymentDetails { get; set; }
+        public DbSet<PaymentDetail> PaymentDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -64,13 +64,13 @@ namespace API.Data
             modelBuilder.Entity<Approval>()
                 .HasOne(o => o.Overtime)
                 .WithOne(a => a.Approval)
-                .HasForeignKey<Approval>(a => a.OvertimeGuid);
+                .HasForeignKey<Approval>(a => a.Guid);
 
-            // One PaymentDetails has many Overtime
-            modelBuilder.Entity<PaymentDetails>()
-                .HasMany(a => a.Overtimes)
-                .WithOne(o => o.PaymentDetails)
-                .HasForeignKey(o => o.PaymentDetailsGuid);
+            // One PaymentDetail has one Overtime
+            modelBuilder.Entity<PaymentDetail>()
+                .HasOne(a => a.Overtime)
+                .WithOne(o => o.PaymentDetail)
+                .HasForeignKey<PaymentDetail>(o => o.Guid);
         }
     }
 }

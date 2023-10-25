@@ -31,7 +31,7 @@ builder.Services.AddScoped<IAccountRoleRepository, AccountRoleRepository>();
 builder.Services.AddScoped<IApprovalRepository, ApprovalRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IOvertimeRepository, OvertimeRepository>();
-builder.Services.AddScoped<IPaymentDetailsRepository, PaymentDetailsRepository>();
+builder.Services.AddScoped<IPaymentDetailRepository, PaymentDetailRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 
 builder.Services.AddControllers()
