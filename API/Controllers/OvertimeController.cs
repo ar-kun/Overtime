@@ -21,7 +21,7 @@ namespace API.Controllers
         }
 
         // Endpoint untuk menampilkan detail Employee dengan join
-        [HttpGet("request")]
+        [HttpGet("req-details")]
         public IActionResult GetDetails()
         {
             var overtimes = _overtimeRepository.GetAll();
