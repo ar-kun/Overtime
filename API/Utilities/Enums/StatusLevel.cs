@@ -9,6 +9,7 @@ namespace API.Utilities.Enums
         Rejected,
         Canceled,
         [Display(Name = "On Going")] OnGoing,
-        [Display(Name = "Waiting for Payment")] WaitingForPayment
+        [Display(Name = "Waiting for Payment")] WaitingForPayment,
+        Finished
     }
 }

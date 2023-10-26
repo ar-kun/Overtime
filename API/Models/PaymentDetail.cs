@@ -6,8 +6,8 @@ namespace API.Models
     [Table(name: "tb_m_payment_details")]
     public class PaymentDetail : BaseEntity
     {
-        [Column(name: "total_pay", TypeName = "nvarchar(30)")]
-        public string TotalPay { get; set; }
+        [Column(name: "total_pay")]
+        public int TotalPay { get; set; }
 
         [Column(name: "created_date")]
         public DateTime CreatedDate { get; set; }

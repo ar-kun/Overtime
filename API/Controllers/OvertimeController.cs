@@ -12,10 +12,49 @@ namespace API.Controllers
     public class OvertimeController : ControllerBase
     {
         private readonly IOvertimeRepository _overtimeRepository;
+        private readonly IEmployeeRepository _employeeRepository;
 
-        public OvertimeController(IOvertimeRepository overtimeRepository)
+        public OvertimeController(IOvertimeRepository overtimeRepository, IEmployeeRepository employeeRepository)
         {
             _overtimeRepository = overtimeRepository;
+            _employeeRepository = employeeRepository;
+        }
+
+        // Endpoint untuk menampilkan detail Employee dengan join
+        [HttpGet("req-details")]
+        public IActionResult GetDetails()
+        {
+            var overtimes = _overtimeRepository.GetAll();
+            var employees = _employeeRepository.GetAll();
+
+            if (!(employees.Any() && overtimes.Any()))
+            {
+                return NotFound(new ResponseErrorHandler
+                {
+                    Code = StatusCodes.Status404NotFound,
+                    Status = HttpStatusCode.NotFound.ToString(),
+                    Message = "Data Not Found"
+                });
+            }
+
+            var overtimeDetails = from o in overtimes
+                                  join e in employees on o.EmployeeGuid equals e.Guid
+                                  join m in employees on e.ManagerGuid equals m.Guid
+                                  select new OvertimeReqDetailDto
+                                  {
+                                      Guid = o.Guid,
+                                      EmployeeGuid = o.EmployeeGuid,
+                                      EmployeeFullName = string.Concat(e.FirstName, " ", e.LastName),
+                                      ManagerGuid = e.ManagerGuid,
+                                      ManagerFullName = string.Concat(m.FirstName, " ", m.LastName),
+                                      DateRequest = o.DateRequest,
+                                      Duration = o.Duration,
+                                      Status = o.Status.ToString(),
+                                      Remarks = o.Remarks,
+                                      TypeOfDay = o.TypeOfDay.ToString(),
+                                  };
+
+            return Ok(new ResponseOKHandler<IEnumerable<OvertimeReqDetailDto>>(overtimeDetails));
         }
 
         // Endpoint to retrieve all Overtime data
@@ -57,9 +96,9 @@ namespace API.Controllers
             return Ok(new ResponseOKHandler<OvertimeDto>((OvertimeDto)result));
         }
 
-        // Endpoint for creating new Overtime data
+        // Endpoint for creating new Overtime request
         [HttpPost]
-        public IActionResult Create(StoreOvertimeDto createOvertimeDto)
+        public IActionResult Create(CreateOvertimeDto createOvertimeDto)
         {
             try
             {
@@ -82,7 +121,7 @@ namespace API.Controllers
 
         // Endpoint to update Overtime data based on GUID
         [HttpPut]
-        public IActionResult Update(StoreOvertimeDto updateOvertimeDto)
+        public IActionResult Update(UpdateOvertimeDto updateOvertimeDto)
         {
             try
             {

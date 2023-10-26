@@ -3,7 +3,7 @@ using API.Utilities.Enums;
 
 namespace API.DTOs.Overtimes
 {
-    public class StoreOvertimeDto
+    public class UpdateOvertimeDto
     {
         public Guid Guid { get; set; }
         public Guid EmployeeGuid { get; set; }
@@ -14,17 +14,17 @@ namespace API.DTOs.Overtimes
         public TypeDayLevel TypeOfDay { get; set; }
 
         // Implicit conversion operator from OvertimeDto to Overtime Model
-        public static implicit operator Overtime(StoreOvertimeDto storeOvertimeDto)
+        public static implicit operator Overtime(UpdateOvertimeDto updateOvertimeDto)
         {
             return new Overtime
             {
-                Guid = storeOvertimeDto.Guid,
-                EmployeeGuid = storeOvertimeDto.EmployeeGuid,
-                DateRequest = storeOvertimeDto.DateRequest,
-                Duration = storeOvertimeDto.Duration,
-                Status = storeOvertimeDto.Status,
-                Remarks = storeOvertimeDto.Remarks,
-                TypeOfDay = storeOvertimeDto.TypeOfDay
+                Guid = updateOvertimeDto.Guid,
+                EmployeeGuid = updateOvertimeDto.EmployeeGuid,
+                DateRequest = updateOvertimeDto.DateRequest,
+                Duration = updateOvertimeDto.Duration,
+                Status = updateOvertimeDto.Status,
+                Remarks = updateOvertimeDto.Remarks,
+                TypeOfDay = updateOvertimeDto.TypeOfDay
             };
         }
     }

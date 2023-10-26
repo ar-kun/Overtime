@@ -5,3 +5,12 @@
 * {
  @apply font-primary box-border m-0 p-0;
 }
+
+.today {
+ @apply text-2xl font-bold bg-secondary rounded-lg text-primary;
+}
+
+.next-date,
+.prev-date {
+ @apply text-lg text-gray-400 hover:text-primary hover:bg-secondary/50 rounded-lg;
+}
