@@ -183,7 +183,9 @@ namespace API.Controllers
                         Salary = registerDto.Salary
                     };
                     employeeToCreate.Nik = GenerateHandler.GenerateNIK(_employeeRepository.GetLastNik());
-                    employeeToCreate.ManagerGuid = _employeeRepository.GetManagerGuid(registerDto.ManagerNik);
+                    employeeToCreate.ManagerGuid = string.IsNullOrEmpty(registerDto.ManagerNik)
+                                                        ? null
+                                                        : _employeeRepository.GetManagerGuid(registerDto.ManagerNik);
 
                     var employeeResult = _employeeRepository.Create(employeeToCreate);
 

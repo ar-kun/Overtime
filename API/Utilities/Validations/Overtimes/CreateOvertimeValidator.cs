@@ -3,12 +3,11 @@ using FluentValidation;
 
 namespace API.Utilities.Validations.Overtimes
 {
-    public class OvertimeValidator : AbstractValidator<StoreOvertimeDto>
+    public class CreateOvertimeValidator : AbstractValidator<CreateOvertimeDto>
     {
-        public OvertimeValidator() 
+        public CreateOvertimeValidator()
         {
-            // Declares a rule for Guid, EmployeeGuid, DateRequest, and Duration
-            RuleFor(o => o.Guid).NotEmpty().WithMessage("Guid must not be empty");
+            // Declares a rule for EmployeeGuid, DateRequest, and Duration
             RuleFor(o => o.EmployeeGuid).NotEmpty().WithMessage("EmployeeGuid must not be empty");
             RuleFor(o => o.DateRequest).NotEmpty().WithMessage("DateRequest must not be empty");
             RuleFor(o => o.Duration).NotEmpty().WithMessage("Duration must not be empty");
