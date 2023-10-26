@@ -6,7 +6,7 @@ namespace API.DTOs.PaymentDetails
     public class CreatePaymentDetailDto
     {
         public Guid Guid { get; set; }
-        public string TotalPay { get; set; }
+        public int TotalPay { get; set; }
 
         // Declares a public static implicit conversion operator that takes a CreateApprovalDto parameter and returns a Approval object.
         public static implicit operator PaymentDetail(CreatePaymentDetailDto createPaymentDetailDto)

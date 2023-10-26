@@ -6,7 +6,7 @@ namespace API.DTOs.PaymentDetails
     public class PaymentDetailDto
     {
         public Guid Guid { get; set; }
-        public string TotalPay { get; set; }
+        public int TotalPay { get; set; }
 
         // Declares a public static explicit conversion operator that takes a PaymentDetail parameter and returns a PaymentDetailDto object.
         public static explicit operator PaymentDetailDto(PaymentDetail paymentDetail)
