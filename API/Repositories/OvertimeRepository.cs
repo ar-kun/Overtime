@@ -1,6 +1,7 @@
 ﻿using API.Contracts;
 using API.Data;
 using API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Repositories
 {
@@ -9,5 +10,11 @@ namespace API.Repositories
     public class OvertimeRepository : GeneralRepository<Overtime>, IOvertimeRepository
     {
         public OvertimeRepository(OvertimeDbContext context) : base(context) { }
+
+        public void Update(Overtime overtime)
+        {
+            _context.Entry(overtime).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
     }
 }
