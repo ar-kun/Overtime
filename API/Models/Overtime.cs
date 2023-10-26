@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Models
 {
+    // Overtime entity
+    [Table(name: "tb_tr_overtimes")]
     public class Overtime : BaseEntity
     {
         [Column(name: "employee_guid")]
@@ -25,5 +27,7 @@ namespace API.Models
 
         // Cardinality
         public Employee? Employee { get; set; }
+        public Approval? Approval { get; set; }
+        public PaymentDetail? PaymentDetail { get; set; } 
     }
 }

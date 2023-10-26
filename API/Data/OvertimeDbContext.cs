@@ -11,11 +11,12 @@ namespace API.Data
 
         // Add Models to migrate
         public DbSet<Account> Accounts { get; set; }
-
         public DbSet<AccountRole> AccountRoles { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Overtime> Overtimes { get; set; }
+        public DbSet<Approval> Approvals { get; set; }
+        public DbSet<PaymentDetail> PaymentDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -58,6 +59,18 @@ namespace API.Data
                 .HasMany(a => a.AccountRoles)
                 .WithOne(r => r.Role)
                 .HasForeignKey(a => a.RoleGuid);
+
+            // One Approval has one Overtime
+            modelBuilder.Entity<Approval>()
+                .HasOne(o => o.Overtime)
+                .WithOne(a => a.Approval)
+                .HasForeignKey<Approval>(a => a.Guid);
+
+            // One PaymentDetail has one Overtime
+            modelBuilder.Entity<PaymentDetail>()
+                .HasOne(a => a.Overtime)
+                .WithOne(o => o.PaymentDetail)
+                .HasForeignKey<PaymentDetail>(o => o.Guid);
         }
     }
 }
