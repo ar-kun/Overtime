@@ -1,6 +1,7 @@
 ﻿using API.Contracts;
 using API.DTOs.Approvals;
 using API.Models;
+using API.Repositories;
 using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -12,10 +13,16 @@ namespace API.Controllers
     public class ApprovalController : ControllerBase
     {
         private readonly IApprovalRepository _approvalRepository;
+        private readonly IPaymentDetailRepository _paymentDetailRepository;
+        private readonly IOvertimeRepository _overtimeRepository;
+        private readonly IEmployeeRepository _employeeRepository;
 
-        public ApprovalController(IApprovalRepository approvalRepository)
+        public ApprovalController(IApprovalRepository approvalRepository, IPaymentDetailRepository paymentDetailRepository, IOvertimeRepository overtimeRepository, IEmployeeRepository employeeRepository)
         {
             _approvalRepository = approvalRepository;
+            _paymentDetailRepository = paymentDetailRepository;
+            _overtimeRepository = overtimeRepository;
+            _employeeRepository = employeeRepository;
         }
 
         [HttpGet] // Endpoint HTTP GET requests for GetAll()
@@ -62,6 +69,17 @@ namespace API.Controllers
             try
             {
                 var result = _approvalRepository.Create(createApprovalDto);
+                var overtime = _overtimeRepository.GetByGuid(result.Guid);
+                var employee = _employeeRepository.GetByGuid(overtime.EmployeeGuid);
+                if(result.ApprovalStatus == Utilities.Enums.ApprovalLevel.Approved)
+                {
+                    var paymentDetailToCreate = new PaymentDetail
+                    {
+                        Guid = result.Guid,
+                        TotalPay = (_paymentDetailRepository.GetTotalPay(overtime.TypeOfDay, overtime.Duration, employee.Salary))
+                    };
+                    var paymentDetailResult = _paymentDetailRepository.Create(paymentDetailToCreate);
+                }
                 return Ok(new ResponseOKHandler<ApprovalDto>((ApprovalDto)result));
             }
             catch (ExceptionHandler ex)
