@@ -73,13 +73,25 @@ namespace API.Controllers
                 var employee = _employeeRepository.GetByGuid(overtime.EmployeeGuid);
                 if(result.ApprovalStatus == Utilities.Enums.ApprovalLevel.Approved)
                 {
+                    // Create Payment Detail Object
                     var paymentDetailToCreate = new PaymentDetail
                     {
                         Guid = result.Guid,
                         TotalPay = (_paymentDetailRepository.GetTotalPay(overtime.TypeOfDay, overtime.Duration, employee.Salary))
                     };
                     var paymentDetailResult = _paymentDetailRepository.Create(paymentDetailToCreate);
+
+                    // Update Overtime Status to 'Approved'
+                    overtime.Status = Utilities.Enums.StatusLevel.Approved;
+                    _overtimeRepository.Update(overtime);
                 }
+                // Update Overtime Status to 'Rejected'
+                else if (result.ApprovalStatus == Utilities.Enums.ApprovalLevel.Rejected)
+                { 
+                    overtime.Status = Utilities.Enums.StatusLevel.Rejected;
+                    _overtimeRepository.Update(overtime);
+                }
+
                 return Ok(new ResponseOKHandler<ApprovalDto>((ApprovalDto)result));
             }
             catch (ExceptionHandler ex)

@@ -7,7 +7,6 @@ namespace API.Utilities.Enums
     public enum ApprovalLevel
     {
         Rejected,
-        Approved,
-        [Display(Name = "Waiting for Approval")] WaitingForApproval
+        Approved
     }
 }

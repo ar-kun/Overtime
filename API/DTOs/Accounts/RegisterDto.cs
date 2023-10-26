@@ -6,7 +6,6 @@ namespace API.DTOs.Accounts
     {
         // Declares a public property for RegisterDto
         public string FirstName { get; set; }
-
         public string? LastName { get; set; }
         public DateTime BirthDate { get; set; }
         public GenderLevel Gender { get; set; }
