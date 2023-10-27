@@ -1,6 +1,7 @@
 ﻿using API.Contracts;
 using API.DTOs.Overtimes;
 using API.Models;
+using API.Utilities.Enums;
 using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -37,6 +38,23 @@ namespace API.Controllers
                 });
             }
 
+            // Filter and update Overtimes Status
+            foreach (var overtime in overtimes)
+            {
+                if (overtime.Status == StatusLevel.Approved && overtime.DateRequest.Date == DateTime.Now.Date)
+                {
+                    // Update the status to 'OnGoing'
+                    overtime.Status = StatusLevel.OnGoing;
+                    _overtimeRepository.Update(overtime);
+                }
+                else if (overtime.Status == StatusLevel.OnGoing && overtime.DateRequest.Date < DateTime.Now.Date)
+                {
+                    // Update the status to 'WaitingForPayment'
+                    overtime.Status = StatusLevel.OnGoing;
+                    _overtimeRepository.Update(overtime);
+                }
+            }
+
             var overtimeDetails = from o in overtimes
                                   join e in employees on o.EmployeeGuid equals e.Guid
                                   join m in employees on e.ManagerGuid equals m.Guid
@@ -62,6 +80,7 @@ namespace API.Controllers
         public IActionResult GetAll()
         {
             var result = _overtimeRepository.GetAll();
+
             if (!result.Any())
             {
                 // Mengembalikan pesan jika tidak ada data yang ditemukan
@@ -72,6 +91,25 @@ namespace API.Controllers
                     Message = "Data Not Found"
                 });
             }
+
+            // Filter and update Overtimes Status
+            foreach (var overtime in result)
+            {
+                if (overtime.Status == StatusLevel.Approved && overtime.DateRequest.Date == DateTime.Now.Date)
+                {
+                    // Update the status to 'OnGoing'
+                    overtime.Status = StatusLevel.OnGoing;
+                    _overtimeRepository.Update(overtime);
+                }
+
+                else if (overtime.Status == StatusLevel.OnGoing && overtime.DateRequest.Date < DateTime.Now.Date)
+                {
+                    // Update the status to 'WaitingForPayment'
+                    overtime.Status = StatusLevel.OnGoing;
+                    _overtimeRepository.Update(overtime);
+                }
+            }
+            
             var data = result.Select(x => (OvertimeDto)x);
 
             return Ok(new ResponseOKHandler<IEnumerable<OvertimeDto>>(data));
@@ -92,6 +130,22 @@ namespace API.Controllers
                     Message = "ID Not Found"
                 });
             }
+
+            // Filter and update Overtimes Status
+            if (result.Status == StatusLevel.Approved && result.DateRequest.Date == DateTime.Now.Date)
+            {
+                // Update the status to 'OnGoing'
+                result.Status = StatusLevel.OnGoing;
+                _overtimeRepository.Update(result);
+            }
+            else if (result.Status == StatusLevel.Approved && result.DateRequest.Date == DateTime.Now.Date)
+            {
+                // Update the status to 'WaitingForPayment'
+                result.Status = StatusLevel.OnGoing;
+                _overtimeRepository.Update(result);
+            }
+            
+
             // Mengembalikan data Employee jika ditemukan
             return Ok(new ResponseOKHandler<OvertimeDto>((OvertimeDto)result));
         }
