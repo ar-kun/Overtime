@@ -5,6 +5,7 @@ using API.Utilities.Enums;
 using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Security.Principal;
 
 namespace API.Controllers
 {
@@ -14,11 +15,13 @@ namespace API.Controllers
     {
         private readonly IOvertimeRepository _overtimeRepository;
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IEmailHandler _emailHandler;
 
-        public OvertimeController(IOvertimeRepository overtimeRepository, IEmployeeRepository employeeRepository)
+        public OvertimeController(IOvertimeRepository overtimeRepository, IEmployeeRepository employeeRepository, IEmailHandler emailHandler)
         {
             _overtimeRepository = overtimeRepository;
             _employeeRepository = employeeRepository;
+            _emailHandler = emailHandler;
         }
 
         // Endpoint untuk menampilkan detail Employee dengan join
@@ -157,6 +160,13 @@ namespace API.Controllers
             try
             {
                 var result = _overtimeRepository.Create(createOvertimeDto);
+                var employee = _employeeRepository.GetByGuid(createOvertimeDto.EmployeeGuid);
+                var managerEmail = _employeeRepository.GetEmail(employee.ManagerGuid);
+
+                // Send OTP to smtp
+                _emailHandler.Send("Overtime Request", 
+                                        $"Hello sir, {string.Concat(employee.FirstName + " " + employee.LastName)} has just submitted a request for overtime and waiting for a response from you. Thank You :)",
+                                        managerEmail);
 
                 // Mengembalikan data Employee yang baru saja dibuat
                 return Ok(new ResponseOKHandler<OvertimeDto>((OvertimeDto)result));

@@ -16,13 +16,15 @@ namespace API.Controllers
         private readonly IPaymentDetailRepository _paymentDetailRepository;
         private readonly IOvertimeRepository _overtimeRepository;
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IEmailHandler _emailHandler;
 
-        public ApprovalController(IApprovalRepository approvalRepository, IPaymentDetailRepository paymentDetailRepository, IOvertimeRepository overtimeRepository, IEmployeeRepository employeeRepository)
+        public ApprovalController(IApprovalRepository approvalRepository, IPaymentDetailRepository paymentDetailRepository, IOvertimeRepository overtimeRepository, IEmployeeRepository employeeRepository, IEmailHandler emailHandler)
         {
             _approvalRepository = approvalRepository;
             _paymentDetailRepository = paymentDetailRepository;
             _overtimeRepository = overtimeRepository;
             _employeeRepository = employeeRepository;
+            _emailHandler = emailHandler;
         }
 
         [HttpGet] // Endpoint HTTP GET requests for GetAll()
@@ -84,12 +86,22 @@ namespace API.Controllers
                     // Update Overtime Status to 'Approved'
                     overtime.Status = Utilities.Enums.StatusLevel.Approved;
                     _overtimeRepository.Update(overtime);
+
+                    // Send OTP to smtp
+                    _emailHandler.Send("Overtime Approval",
+                                            $"Hello {employee.FirstName}, your overtime request has been approved by your manager. Please do overtime according to the specified date",
+                                            employee.Email);
                 }
                 // Update Overtime Status to 'Rejected'
                 else if (result.ApprovalStatus == Utilities.Enums.ApprovalLevel.Rejected)
                 { 
                     overtime.Status = Utilities.Enums.StatusLevel.Rejected;
                     _overtimeRepository.Update(overtime);
+
+                    // Send OTP to smtp
+                    _emailHandler.Send("Overtime Approval",
+                                            $"Hello {employee.FirstName}, your request for overtime was rejected by your manager. Please carry out regular checks and submit overtime requests on other dates",
+                                            employee.Email);
                 }
 
                 return Ok(new ResponseOKHandler<ApprovalDto>((ApprovalDto)result));
