@@ -152,6 +152,15 @@ namespace API.Controllers
                         };
                         var paymentDetailResult = _paymentDetailRepository.Create(paymentDetailToCreate);
                     }
+
+                    // Update Overtime Status to 'Approved'
+                    overtime.Status = Utilities.Enums.StatusLevel.Approved;
+                    _overtimeRepository.Update(overtime);
+
+                    // Send Approval to smtp
+                    _emailHandler.Send("Overtime Approval",
+                                            $"Hello {employee.FirstName}, your overtime request has been approved by your manager. Please do overtime according to the specified date",
+                                            employee.Email);
                 }
                 return Ok(new ResponseOKHandler<string>("Data Updated"));
             }
