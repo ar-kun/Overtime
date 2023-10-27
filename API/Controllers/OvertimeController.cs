@@ -25,6 +25,7 @@ namespace API.Controllers
             _emailHandler = emailHandler;
         }
 
+        // Endpoint to display Overtime details by ManagerGuid
         [HttpGet("manager-guid/{guid}")]
         public IActionResult GetAllByManagerGuid(Guid guid)
         {
@@ -81,7 +82,7 @@ namespace API.Controllers
             return Ok(new ResponseOKHandler<IEnumerable<OvertimeReqDetailDto>>(overtimeDetails));
         }
 
-        // Endpoint untuk menampilkan detail Employee dengan join
+        // Endpoint to display all Overtime details
         [HttpGet("req-details")]
         public IActionResult GetDetails()
         {
