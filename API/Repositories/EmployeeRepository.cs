@@ -12,6 +12,15 @@ namespace API.Repositories
         {
         }
 
+        // Get Email By EmployeeGuid
+        public string? GetEmail(Guid? employeeGuid)
+        {
+           return _context.Employees
+                    .Where(e => e.Guid == employeeGuid)
+                    .Select(e => e.Email)
+                    .SingleOrDefault();
+        }
+
         // Get Last NIK
         public string? GetLastNik()
         {
@@ -22,7 +31,7 @@ namespace API.Repositories
             return lastNik;
         }
 
-        // Get Employee Email
+        // Get Employee By Email
         public Employee? GetByEmail(string email)
         {
             // Menggunakan LINQ untuk mencari Employee berdasarkan email
