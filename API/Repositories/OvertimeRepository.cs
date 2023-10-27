@@ -16,5 +16,12 @@ namespace API.Repositories
             _context.Entry(overtime).State = EntityState.Modified;
             _context.SaveChanges();
         }
+
+        public IEnumerable<Overtime> GetByManagerGuid(Guid guid)
+        {
+            return _context.Set<Overtime>()
+                .Where(o => o.Employee.ManagerGuid == guid)
+                .ToList();
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace API.Repositories
         // Get Email By EmployeeGuid
         public string? GetEmail(Guid? employeeGuid)
         {
-           return _context.Employees
+           return _context.Set<Employee>()
                     .Where(e => e.Guid == employeeGuid)
                     .Select(e => e.Email)
                     .SingleOrDefault();

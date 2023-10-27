@@ -87,7 +87,7 @@ namespace API.Controllers
                     overtime.Status = Utilities.Enums.StatusLevel.Approved;
                     _overtimeRepository.Update(overtime);
 
-                    // Send OTP to smtp
+                    // Send Approval to smtp
                     _emailHandler.Send("Overtime Approval",
                                             $"Hello {employee.FirstName}, your overtime request has been approved by your manager. Please do overtime according to the specified date",
                                             employee.Email);
@@ -98,7 +98,7 @@ namespace API.Controllers
                     overtime.Status = Utilities.Enums.StatusLevel.Rejected;
                     _overtimeRepository.Update(overtime);
 
-                    // Send OTP to smtp
+                    // Send Approval to smtp
                     _emailHandler.Send("Overtime Approval",
                                             $"Hello {employee.FirstName}, your request for overtime was rejected by your manager. Please carry out regular checks and submit overtime requests on other dates",
                                             employee.Email);

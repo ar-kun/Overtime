@@ -4,6 +4,7 @@ using API.Models;
 using API.Utilities.Enums;
 using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Security.Principal;
 
@@ -22,6 +23,62 @@ namespace API.Controllers
             _overtimeRepository = overtimeRepository;
             _employeeRepository = employeeRepository;
             _emailHandler = emailHandler;
+        }
+
+        [HttpGet("manager-guid/{guid}")]
+        public IActionResult GetAllByManagerGuid(Guid guid)
+        {
+            var overtimeRequests = _overtimeRepository.GetByManagerGuid(guid);
+            var employees = _employeeRepository.GetAll();
+
+            if (!overtimeRequests.Any())
+            {
+                return NotFound(new ResponseErrorHandler
+                {
+                    Code = StatusCodes.Status404NotFound,
+                    Status = HttpStatusCode.NotFound.ToString(),
+                    Message = "No Overtime Requests found"
+                });
+            }
+
+            // Filter and update Overtimes Status
+            foreach (var overtime in overtimeRequests)
+            {
+                if (overtime.Status == StatusLevel.Approved && overtime.DateRequest.Date == DateTime.Now.Date)
+                {
+                    // Update the status to 'OnGoing'
+                    overtime.Status = StatusLevel.OnGoing;
+                    _overtimeRepository.Update(overtime);
+                }
+                else if (overtime.Status == StatusLevel.OnGoing && overtime.DateRequest.Date < DateTime.Now.Date)
+                {
+                    // Update the status to 'WaitingForPayment'
+                    overtime.Status = StatusLevel.OnGoing;
+                    _overtimeRepository.Update(overtime);
+                }
+            }
+
+            var overtimeDetails = from o in overtimeRequests
+                                  join e in employees on o.EmployeeGuid equals e.Guid
+                                  join m in employees on e.ManagerGuid equals m.Guid
+                                  select new OvertimeReqDetailDto
+                                  {
+                                      Guid = o.Guid,
+                                      EmployeeGuid = o.EmployeeGuid,
+                                      FullName = string.Concat(e.FirstName, " ", e.LastName),
+                                      Gender = e.Gender.ToString(),
+                                      Email = e.Email,
+                                      PhoneNumber = e.PhoneNumber,
+                                      Salary = e.Salary,
+                                      ManagerGuid = e.ManagerGuid,
+                                      ManagerFullName = string.Concat(m.FirstName, " ", m.LastName),
+                                      DateRequest = o.DateRequest,
+                                      Duration = o.Duration,
+                                      Status = o.Status.ToString(),
+                                      Remarks = o.Remarks,
+                                      TypeOfDay = o.TypeOfDay.ToString(),
+                                  };
+            return Ok(new ResponseOKHandler<IEnumerable<OvertimeReqDetailDto>>(overtimeDetails));
         }
 
         // Endpoint untuk menampilkan detail Employee dengan join
@@ -65,7 +122,11 @@ namespace API.Controllers
                                   {
                                       Guid = o.Guid,
                                       EmployeeGuid = o.EmployeeGuid,
-                                      EmployeeFullName = string.Concat(e.FirstName, " ", e.LastName),
+                                      FullName = string.Concat(e.FirstName, " ", e.LastName),
+                                      Gender = e.Gender.ToString(),
+                                      Email = e.Email,
+                                      PhoneNumber = e.PhoneNumber,
+                                      Salary = e.Salary,
                                       ManagerGuid = e.ManagerGuid,
                                       ManagerFullName = string.Concat(m.FirstName, " ", m.LastName),
                                       DateRequest = o.DateRequest,
@@ -163,7 +224,7 @@ namespace API.Controllers
                 var employee = _employeeRepository.GetByGuid(createOvertimeDto.EmployeeGuid);
                 var managerEmail = _employeeRepository.GetEmail(employee.ManagerGuid);
 
-                // Send OTP to smtp
+                // Send Request to smtp
                 _emailHandler.Send("Overtime Request", 
                                         $"Hello sir, {string.Concat(employee.FirstName + " " + employee.LastName)} has just submitted a request for overtime and waiting for a response from you. Thank You :)",
                                         managerEmail);

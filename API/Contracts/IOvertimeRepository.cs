@@ -6,5 +6,7 @@ namespace API.Contracts
     public interface IOvertimeRepository : IGeneralRepository<Overtime>
     {
         void Update(Overtime overtime);
+
+        IEnumerable<Overtime> GetByManagerGuid(Guid guid);
     }
 }
