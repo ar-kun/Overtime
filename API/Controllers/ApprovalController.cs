@@ -4,6 +4,7 @@ using API.Models;
 using API.Repositories;
 using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Net;
 
 namespace API.Controllers
@@ -125,6 +126,8 @@ namespace API.Controllers
             try
             {
                 var entity = _approvalRepository.GetByGuid(approvalDto.Guid);
+                var overtime = _overtimeRepository.GetByGuid(entity.Guid);
+                var employee = _employeeRepository.GetByGuid(overtime.EmployeeGuid);
                 if (entity is null)
                 {
                     // Returns a 404 Not Found response if the entity is null.
@@ -137,6 +140,19 @@ namespace API.Controllers
                 }
                 Approval toUpdate = approvalDto;
                 _approvalRepository.Update(toUpdate);
+                if(toUpdate.ApprovalStatus == Utilities.Enums.ApprovalLevel.Approved)
+                {
+                    var paymentDetail = _paymentDetailRepository.GetByGuid(toUpdate.Guid);
+                    if(paymentDetail is null)
+                    {
+                        var paymentDetailToCreate = new PaymentDetail
+                        {
+                            Guid = toUpdate.Guid,
+                            TotalPay = (_paymentDetailRepository.GetTotalPay(overtime.TypeOfDay, overtime.Duration, employee.Salary))
+                        };
+                        var paymentDetailResult = _paymentDetailRepository.Create(paymentDetailToCreate);
+                    }
+                }
                 return Ok(new ResponseOKHandler<string>("Data Updated"));
             }
             catch (ExceptionHandler ex)
