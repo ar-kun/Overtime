@@ -42,5 +42,12 @@ namespace API.Repositories
             }
             return totalPay;
         }
+
+        public IEnumerable<PaymentDetail> GetByEmployeeGuid(Guid guid)
+        {
+            return _context.Set<PaymentDetail>()
+                .Where(o => o.Overtime.EmployeeGuid == guid)
+                .ToList();
+        }
     }
 }

@@ -18,6 +18,25 @@ namespace API.Controllers
             _paymentDetailRepository = paymentDetailRepository;
         }
 
+        [HttpGet("employee-guid/{guid}")] // Endpoint to display payment details by EmployeeGuid
+        public IActionResult GetAllByEmployeeGuid(Guid guid)
+        {
+            var result = _paymentDetailRepository.GetByEmployeeGuid(guid);
+            if (result is null)
+            {
+                // Returns a 404 Not Found response with code, status and message if the result is empty
+                return NotFound(new ResponseErrorHandler
+                {
+                    Code = StatusCodes.Status404NotFound,
+                    Status = HttpStatusCode.NotFound.ToString(),
+                    Message = "Data Not Found"
+                });
+            }
+            // Converts each PaymentDetail object in the result to a PaymentDetailDto object
+            var data = result.Select(x => (PaymentDetailDto)x);
+            return Ok(new ResponseOKHandler<IEnumerable<PaymentDetailDto>>(data));
+        }
+
         [HttpGet] // Endpoint HTTP GET requests for GetAll()
         public IActionResult GetAll()
         {

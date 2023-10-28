@@ -7,5 +7,7 @@ namespace API.Contracts
     public interface IPaymentDetailRepository : IGeneralRepository<PaymentDetail>
     {
         int GetTotalPay(TypeDayLevel typeOfDay, int duration, int salary);
+
+        IEnumerable<PaymentDetail> GetByEmployeeGuid(Guid guid);
     }
 }
