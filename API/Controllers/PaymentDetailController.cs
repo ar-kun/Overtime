@@ -1,4 +1,5 @@
 ﻿using API.Contracts;
+using API.DTOs.Overtimes;
 using API.DTOs.PaymentDetails;
 using API.Models;
 using API.Utilities.Handlers;
@@ -12,16 +13,19 @@ namespace API.Controllers
     public class PaymentDetailController : ControllerBase
     {
         private readonly IPaymentDetailRepository _paymentDetailRepository;
+        private readonly IOvertimeRepository _overtimeRepository; 
 
-        public PaymentDetailController(IPaymentDetailRepository paymentDetailRepository)
+        public PaymentDetailController(IPaymentDetailRepository paymentDetailRepository, IOvertimeRepository overtimeRepository)
         {
             _paymentDetailRepository = paymentDetailRepository;
+            _overtimeRepository = overtimeRepository;
         }
 
         [HttpGet("employee-guid/{guid}")] // Endpoint to display payment details by EmployeeGuid
         public IActionResult GetAllByEmployeeGuid(Guid guid)
         {
             var result = _paymentDetailRepository.GetByEmployeeGuid(guid);
+            var overtimes = _overtimeRepository.GetAll();
             if (result is null)
             {
                 // Returns a 404 Not Found response with code, status and message if the result is empty
@@ -32,9 +36,16 @@ namespace API.Controllers
                     Message = "Data Not Found"
                 });
             }
-            // Converts each PaymentDetail object in the result to a PaymentDetailDto object
-            var data = result.Select(x => (PaymentDetailDto)x);
-            return Ok(new ResponseOKHandler<IEnumerable<PaymentDetailDto>>(data));
+            var paymentDetails = from p in result
+                                 join o in overtimes on p.Guid equals o.Guid
+                                 select new PaymentDetailEmployeeDto
+                                 {
+                                     Guid = p.Guid,
+                                     DateRequest = o.DateRequest,
+                                     Duration = o.Duration,
+                                     TotalPay = p.TotalPay
+                                 };
+            return Ok(new ResponseOKHandler<IEnumerable<PaymentDetailEmployeeDto>>(paymentDetails));
         }
 
         [HttpGet] // Endpoint HTTP GET requests for GetAll()
