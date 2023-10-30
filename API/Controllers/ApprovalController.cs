@@ -4,6 +4,7 @@ using API.Models;
 using API.Repositories;
 using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Net;
 
 namespace API.Controllers
@@ -16,13 +17,15 @@ namespace API.Controllers
         private readonly IPaymentDetailRepository _paymentDetailRepository;
         private readonly IOvertimeRepository _overtimeRepository;
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IEmailHandler _emailHandler;
 
-        public ApprovalController(IApprovalRepository approvalRepository, IPaymentDetailRepository paymentDetailRepository, IOvertimeRepository overtimeRepository, IEmployeeRepository employeeRepository)
+        public ApprovalController(IApprovalRepository approvalRepository, IPaymentDetailRepository paymentDetailRepository, IOvertimeRepository overtimeRepository, IEmployeeRepository employeeRepository, IEmailHandler emailHandler)
         {
             _approvalRepository = approvalRepository;
             _paymentDetailRepository = paymentDetailRepository;
             _overtimeRepository = overtimeRepository;
             _employeeRepository = employeeRepository;
+            _emailHandler = emailHandler;
         }
 
         [HttpGet] // Endpoint HTTP GET requests for GetAll()
@@ -73,13 +76,35 @@ namespace API.Controllers
                 var employee = _employeeRepository.GetByGuid(overtime.EmployeeGuid);
                 if(result.ApprovalStatus == Utilities.Enums.ApprovalLevel.Approved)
                 {
+                    // Create Payment Detail Object
                     var paymentDetailToCreate = new PaymentDetail
                     {
                         Guid = result.Guid,
                         TotalPay = (_paymentDetailRepository.GetTotalPay(overtime.TypeOfDay, overtime.Duration, employee.Salary))
                     };
                     var paymentDetailResult = _paymentDetailRepository.Create(paymentDetailToCreate);
+
+                    // Update Overtime Status to 'Approved'
+                    overtime.Status = Utilities.Enums.StatusLevel.Approved;
+                    _overtimeRepository.Update(overtime);
+
+                    // Send Approval to smtp
+                    _emailHandler.Send("Overtime Approval",
+                                            $"Hello {employee.FirstName}, your overtime request has been approved by your manager. Please do overtime according to the specified date",
+                                            employee.Email);
                 }
+                // Update Overtime Status to 'Rejected'
+                else if (result.ApprovalStatus == Utilities.Enums.ApprovalLevel.Rejected)
+                { 
+                    overtime.Status = Utilities.Enums.StatusLevel.Rejected;
+                    _overtimeRepository.Update(overtime);
+
+                    // Send Approval to smtp
+                    _emailHandler.Send("Overtime Approval",
+                                            $"Hello {employee.FirstName}, your request for overtime was rejected by your manager. Please carry out regular checks and submit overtime requests on other dates",
+                                            employee.Email);
+                }
+
                 return Ok(new ResponseOKHandler<ApprovalDto>((ApprovalDto)result));
             }
             catch (ExceptionHandler ex)
@@ -101,6 +126,8 @@ namespace API.Controllers
             try
             {
                 var entity = _approvalRepository.GetByGuid(approvalDto.Guid);
+                var overtime = _overtimeRepository.GetByGuid(entity.Guid);
+                var employee = _employeeRepository.GetByGuid(overtime.EmployeeGuid);
                 if (entity is null)
                 {
                     // Returns a 404 Not Found response if the entity is null.
@@ -113,6 +140,28 @@ namespace API.Controllers
                 }
                 Approval toUpdate = approvalDto;
                 _approvalRepository.Update(toUpdate);
+                if(toUpdate.ApprovalStatus == Utilities.Enums.ApprovalLevel.Approved)
+                {
+                    var paymentDetail = _paymentDetailRepository.GetByGuid(toUpdate.Guid);
+                    if(paymentDetail is null)
+                    {
+                        var paymentDetailToCreate = new PaymentDetail
+                        {
+                            Guid = toUpdate.Guid,
+                            TotalPay = (_paymentDetailRepository.GetTotalPay(overtime.TypeOfDay, overtime.Duration, employee.Salary))
+                        };
+                        var paymentDetailResult = _paymentDetailRepository.Create(paymentDetailToCreate);
+                    }
+
+                    // Update Overtime Status to 'Approved'
+                    overtime.Status = Utilities.Enums.StatusLevel.Approved;
+                    _overtimeRepository.Update(overtime);
+
+                    // Send Approval to smtp
+                    _emailHandler.Send("Overtime Approval",
+                                            $"Hello {employee.FirstName}, your overtime request has been approved by your manager. Please do overtime according to the specified date",
+                                            employee.Email);
+                }
                 return Ok(new ResponseOKHandler<string>("Data Updated"));
             }
             catch (ExceptionHandler ex)

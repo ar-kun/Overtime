@@ -1,9 +1,12 @@
 ﻿using API.Contracts;
 using API.DTOs.Overtimes;
 using API.Models;
+using API.Utilities.Enums;
 using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
+using System.Security.Principal;
 
 namespace API.Controllers
 {
@@ -13,14 +16,73 @@ namespace API.Controllers
     {
         private readonly IOvertimeRepository _overtimeRepository;
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IEmailHandler _emailHandler;
 
-        public OvertimeController(IOvertimeRepository overtimeRepository, IEmployeeRepository employeeRepository)
+        public OvertimeController(IOvertimeRepository overtimeRepository, IEmployeeRepository employeeRepository, IEmailHandler emailHandler)
         {
             _overtimeRepository = overtimeRepository;
             _employeeRepository = employeeRepository;
+            _emailHandler = emailHandler;
         }
 
-        // Endpoint untuk menampilkan detail Employee dengan join
+        // Endpoint to display Overtime details by ManagerGuid
+        [HttpGet("manager-guid/{guid}")]
+        public IActionResult GetAllByManagerGuid(Guid guid)
+        {
+            var overtimeRequests = _overtimeRepository.GetByManagerGuid(guid);
+            var employees = _employeeRepository.GetAll();
+
+            if (!overtimeRequests.Any())
+            {
+                return NotFound(new ResponseErrorHandler
+                {
+                    Code = StatusCodes.Status404NotFound,
+                    Status = HttpStatusCode.NotFound.ToString(),
+                    Message = "No Overtime Requests found"
+                });
+            }
+
+            // Filter and update Overtimes Status
+            foreach (var overtime in overtimeRequests)
+            {
+                if (overtime.Status == StatusLevel.Approved && overtime.DateRequest.Date == DateTime.Now.Date)
+                {
+                    // Update the status to 'OnGoing'
+                    overtime.Status = StatusLevel.OnGoing;
+                    _overtimeRepository.Update(overtime);
+                }
+                else if (overtime.Status == StatusLevel.OnGoing && overtime.DateRequest.Date < DateTime.Now.Date)
+                {
+                    // Update the status to 'WaitingForPayment'
+                    overtime.Status = StatusLevel.OnGoing;
+                    _overtimeRepository.Update(overtime);
+                }
+            }
+
+            var overtimeDetails = from o in overtimeRequests
+                                  join e in employees on o.EmployeeGuid equals e.Guid
+                                  join m in employees on e.ManagerGuid equals m.Guid
+                                  select new OvertimeReqDetailDto
+                                  {
+                                      Guid = o.Guid,
+                                      EmployeeGuid = o.EmployeeGuid,
+                                      FullName = string.Concat(e.FirstName, " ", e.LastName),
+                                      Gender = e.Gender.ToString(),
+                                      Email = e.Email,
+                                      PhoneNumber = e.PhoneNumber,
+                                      Salary = e.Salary,
+                                      ManagerGuid = e.ManagerGuid,
+                                      ManagerFullName = string.Concat(m.FirstName, " ", m.LastName),
+                                      DateRequest = o.DateRequest,
+                                      Duration = o.Duration,
+                                      Status = o.Status.ToString(),
+                                      Remarks = o.Remarks,
+                                      TypeOfDay = o.TypeOfDay.ToString(),
+                                  };
+            return Ok(new ResponseOKHandler<IEnumerable<OvertimeReqDetailDto>>(overtimeDetails));
+        }
+
+        // Endpoint to display all Overtime details
         [HttpGet("req-details")]
         public IActionResult GetDetails()
         {
@@ -37,6 +99,23 @@ namespace API.Controllers
                 });
             }
 
+            // Filter and update Overtimes Status
+            foreach (var overtime in overtimes)
+            {
+                if (overtime.Status == StatusLevel.Approved && overtime.DateRequest.Date == DateTime.Now.Date)
+                {
+                    // Update the status to 'OnGoing'
+                    overtime.Status = StatusLevel.OnGoing;
+                    _overtimeRepository.Update(overtime);
+                }
+                else if (overtime.Status == StatusLevel.OnGoing && overtime.DateRequest.Date < DateTime.Now.Date)
+                {
+                    // Update the status to 'WaitingForPayment'
+                    overtime.Status = StatusLevel.OnGoing;
+                    _overtimeRepository.Update(overtime);
+                }
+            }
+
             var overtimeDetails = from o in overtimes
                                   join e in employees on o.EmployeeGuid equals e.Guid
                                   join m in employees on e.ManagerGuid equals m.Guid
@@ -44,7 +123,11 @@ namespace API.Controllers
                                   {
                                       Guid = o.Guid,
                                       EmployeeGuid = o.EmployeeGuid,
-                                      EmployeeFullName = string.Concat(e.FirstName, " ", e.LastName),
+                                      FullName = string.Concat(e.FirstName, " ", e.LastName),
+                                      Gender = e.Gender.ToString(),
+                                      Email = e.Email,
+                                      PhoneNumber = e.PhoneNumber,
+                                      Salary = e.Salary,
                                       ManagerGuid = e.ManagerGuid,
                                       ManagerFullName = string.Concat(m.FirstName, " ", m.LastName),
                                       DateRequest = o.DateRequest,
@@ -62,6 +145,7 @@ namespace API.Controllers
         public IActionResult GetAll()
         {
             var result = _overtimeRepository.GetAll();
+
             if (!result.Any())
             {
                 // Mengembalikan pesan jika tidak ada data yang ditemukan
@@ -72,6 +156,25 @@ namespace API.Controllers
                     Message = "Data Not Found"
                 });
             }
+
+            // Filter and update Overtimes Status
+            foreach (var overtime in result)
+            {
+                if (overtime.Status == StatusLevel.Approved && overtime.DateRequest.Date == DateTime.Now.Date)
+                {
+                    // Update the status to 'OnGoing'
+                    overtime.Status = StatusLevel.OnGoing;
+                    _overtimeRepository.Update(overtime);
+                }
+
+                else if (overtime.Status == StatusLevel.OnGoing && overtime.DateRequest.Date < DateTime.Now.Date)
+                {
+                    // Update the status to 'WaitingForPayment'
+                    overtime.Status = StatusLevel.OnGoing;
+                    _overtimeRepository.Update(overtime);
+                }
+            }
+            
             var data = result.Select(x => (OvertimeDto)x);
 
             return Ok(new ResponseOKHandler<IEnumerable<OvertimeDto>>(data));
@@ -92,6 +195,22 @@ namespace API.Controllers
                     Message = "ID Not Found"
                 });
             }
+
+            // Filter and update Overtimes Status
+            if (result.Status == StatusLevel.Approved && result.DateRequest.Date == DateTime.Now.Date)
+            {
+                // Update the status to 'OnGoing'
+                result.Status = StatusLevel.OnGoing;
+                _overtimeRepository.Update(result);
+            }
+            else if (result.Status == StatusLevel.Approved && result.DateRequest.Date == DateTime.Now.Date)
+            {
+                // Update the status to 'WaitingForPayment'
+                result.Status = StatusLevel.OnGoing;
+                _overtimeRepository.Update(result);
+            }
+            
+
             // Mengembalikan data Employee jika ditemukan
             return Ok(new ResponseOKHandler<OvertimeDto>((OvertimeDto)result));
         }
@@ -103,6 +222,13 @@ namespace API.Controllers
             try
             {
                 var result = _overtimeRepository.Create(createOvertimeDto);
+                var employee = _employeeRepository.GetByGuid(createOvertimeDto.EmployeeGuid);
+                var managerEmail = _employeeRepository.GetEmail(employee.ManagerGuid);
+
+                // Send Request to smtp
+                _emailHandler.Send("Overtime Request", 
+                                        $"Hello sir, {string.Concat(employee.FirstName + " " + employee.LastName)} has just submitted a request for overtime and waiting for a response from you. Thank You :)",
+                                        managerEmail);
 
                 // Mengembalikan data Employee yang baru saja dibuat
                 return Ok(new ResponseOKHandler<OvertimeDto>((OvertimeDto)result));
