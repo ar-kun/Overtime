@@ -1,4 +1,5 @@
-﻿@{
+﻿@model API.DTOs.Accounts.LoginDto;
+@{
     ViewData["Title"] = "Login | Overtime";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
 }
@@ -16,9 +17,11 @@
                     <h1 class="font-secondary text-4xl lg:text-5xl text-center">Login</h1>
                 </div>
                 <p class="text-center">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse beatae odio aliquam</p>
-                <form>
+            <form asp-action="Index">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="relative z-0 w-full mb-6 group rounded-b-lg bg-secondary px-5 shadow-md shadow-slate-500">
                         <input type="email"
+                               asp-for="Email"
                                name="floating_email"
                                id="floating_email"
                                class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -29,6 +32,7 @@
                     </div>
                     <div class="relative z-0 w-full mb-6 group rounded-b-lg bg-secondary px-5 shadow-md shadow-slate-500">
                         <input type="password"
+                           asp-for="Password"
                                name="floating_password"
                                id="floating_password"
                                class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -44,7 +48,7 @@
                                        type="checkbox"
                                        value=""
                                        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                                       required />
+                                        />
                             </div>
                             <label for="remember" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
                         </div>

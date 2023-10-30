@@ -9,6 +9,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\API\API.csproj" />
+  </ItemGroup>
 	<ItemGroup>
 		<UpToDateCheckBuilt Include="wwwroot/css/site.css" Set="Css" />
 		<UpToDateCheckBuilt Include="tailwind.config.js" Set="Css" />
