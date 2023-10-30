@@ -26,7 +26,7 @@ namespace Client.Controllers
             {
 
                 HttpContext.Session.SetString("JWToken", result.Data.Token);
-                return RedirectToAction("Index", "Employee");
+                return RedirectToAction("Index", "Dashboard");
             }
             return RedirectToAction("Index", "Home");
         }
