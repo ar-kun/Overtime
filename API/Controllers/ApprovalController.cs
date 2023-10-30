@@ -6,6 +6,7 @@ using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace API.Controllers
 {
@@ -162,6 +163,14 @@ namespace API.Controllers
                                             $"Hello {employee.FirstName}, your overtime request has been approved by your manager. Please do overtime according to the specified date",
                                             employee.Email);
                 }
+                if(toUpdate.ApprovalStatus == Utilities.Enums.ApprovalLevel.Rejected)
+                {
+                    var paymentDetail = _paymentDetailRepository.GetByGuid(toUpdate.Guid);
+                    if (paymentDetail is not null)
+                    {
+                        _paymentDetailRepository.Delete(paymentDetail);
+                    }
+                }
                 return Ok(new ResponseOKHandler<string>("Data Updated"));
             }
             catch (ExceptionHandler ex)
@@ -194,6 +203,8 @@ namespace API.Controllers
                     });
                 }
                 _approvalRepository.Delete(entity);
+                var paymentDetail = _paymentDetailRepository.GetByGuid(entity.Guid);
+                _paymentDetailRepository.Delete(paymentDetail);
                 return Ok(new ResponseOKHandler<string>("Data Deleted"));
             }
             catch (ExceptionHandler ex)
