@@ -1,5 +1,6 @@
 ﻿using API.Contracts;
 using API.DTOs.Accounts;
+using API.DTOs.Roles;
 using API.Models;
 using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Authorization;
@@ -170,6 +171,16 @@ namespace API.Controllers
                             Message = "Password and confirm password do not match"
                         });
                     }
+                    // Create employee role
+                    if (_roleRepository is null)
+                    {
+                        var employeeRole = new Role
+                        {
+                            Name = "Employee"
+                        };
+                        _roleRepository.Create(employeeRole);
+                    }
+
                     // Create a new employee object
                     var employeeToCreate = new Employee
                     {
