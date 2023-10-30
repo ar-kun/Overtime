@@ -30,5 +30,12 @@ namespace Client.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet("Logout/")]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

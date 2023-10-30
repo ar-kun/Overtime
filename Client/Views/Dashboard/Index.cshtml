@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<API.DTOs.Overtimes.OvertimeDto>
+@{
     ViewData["Title"] = "Dashboard | Schedule";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
 }
@@ -8,22 +9,28 @@
         <img src="~/img/logo.png" alt="" class="px-5 pt-5" />
         <div class="border-b-2 border-primary border-dashed w-full mb-4"></div>
         <div class="px-10 text-xl my-2">
-            <a href="" class="flex gap-5">
+            <a href="" class="flex items-center gap-5">
                 <i class="fa-regular fa-calendar-check"></i>
                 <p>Dashboard</p>
             </a>
             <div class="border-b-2 border-primary w-full mb-4"></div>
         </div>
         <div class="px-10 text-xl my-2">
-            <a href="" class="flex gap-5">
+            <a href="" class="flex items-center gap-5">
                 <i class="fa-regular fa-rectangle-list"></i>
                 <p>Overtime</p>
             </a>
         </div>
         <div class="px-10 text-xl my-2">
-            <a href="" class="flex gap-5">
+            <a href="" class="flex items-center gap-5">
                 <i class="fa-solid fa-users"></i>
                 <p>Employees</p>
+            </a>
+        </div>
+        <div class="px-10 text-xl my-2">
+            <a href="/Logout" class="flex items-center gap-5">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <p>Logout</p>
             </a>
         </div>
     </section>
