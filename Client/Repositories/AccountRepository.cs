@@ -18,12 +18,22 @@ namespace Client.Repositories
             string jsonEntity = JsonConvert.SerializeObject(login);
             StringContent content = new StringContent(jsonEntity, Encoding.UTF8, "application/json");
 
-            using (var response = await httpClient.PostAsync($"{request}login", content))
+            try
             {
-                response.EnsureSuccessStatusCode();
-                string apiResponse = await response.Content.ReadAsStringAsync();
-                var entityVM = JsonConvert.DeserializeObject<ResponseOKHandler<TokenDto>>(apiResponse);
-                return entityVM;
+                using (var response = await httpClient.PostAsync($"{request}login", content))
+                {
+                    response.EnsureSuccessStatusCode();
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    var entityVM = JsonConvert.DeserializeObject<ResponseOKHandler<TokenDto>>(apiResponse);
+                    return entityVM;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Tangani kesalahan di sini, misalnya, log pesan kesalahan atau tampilkan pesan kesalahan kepada pengguna.
+                Console.WriteLine(ex.Message);
+                
+                return null;
             }
         }
     }
