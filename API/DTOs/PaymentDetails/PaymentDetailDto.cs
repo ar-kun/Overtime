@@ -1,5 +1,6 @@
 ﻿using API.DTOs.Approvals;
 using API.Models;
+using API.Utilities.Enums;
 
 namespace API.DTOs.PaymentDetails
 {
@@ -7,6 +8,7 @@ namespace API.DTOs.PaymentDetails
     {
         public Guid Guid { get; set; }
         public int TotalPay { get; set; }
+        public PaymentLevel PaymentStatus { get; set; }
 
         // Declares a public static explicit conversion operator that takes a PaymentDetail parameter and returns a PaymentDetailDto object.
         public static explicit operator PaymentDetailDto(PaymentDetail paymentDetail)
@@ -14,7 +16,8 @@ namespace API.DTOs.PaymentDetails
             return new PaymentDetailDto
             {
                 Guid = paymentDetail.Guid,
-                TotalPay = paymentDetail.TotalPay
+                TotalPay = paymentDetail.TotalPay,
+                PaymentStatus = paymentDetail.PaymentStatus
             };
         }
 
@@ -25,6 +28,7 @@ namespace API.DTOs.PaymentDetails
             {
                 Guid = paymentDetailDto.Guid,
                 TotalPay = paymentDetailDto.TotalPay,
+                PaymentStatus = paymentDetailDto.PaymentStatus,
                 ModifiedDate = DateTime.Now
             };
         }

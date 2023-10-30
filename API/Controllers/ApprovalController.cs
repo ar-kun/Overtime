@@ -81,7 +81,10 @@ namespace API.Controllers
                     var paymentDetailToCreate = new PaymentDetail
                     {
                         Guid = result.Guid,
-                        TotalPay = (_paymentDetailRepository.GetTotalPay(overtime.TypeOfDay, overtime.Duration, employee.Salary))
+                        TotalPay = (_paymentDetailRepository.GetTotalPay(overtime.TypeOfDay, overtime.Duration, employee.Salary)),
+                        PaymentStatus = Utilities.Enums.PaymentLevel.Unpaid,
+                        CreatedDate = DateTime.Now,
+                        ModifiedDate = DateTime.Now
                     };
                     var paymentDetailResult = _paymentDetailRepository.Create(paymentDetailToCreate);
 
@@ -149,7 +152,10 @@ namespace API.Controllers
                         var paymentDetailToCreate = new PaymentDetail
                         {
                             Guid = toUpdate.Guid,
-                            TotalPay = (_paymentDetailRepository.GetTotalPay(overtime.TypeOfDay, overtime.Duration, employee.Salary))
+                            TotalPay = (_paymentDetailRepository.GetTotalPay(overtime.TypeOfDay, overtime.Duration, employee.Salary)),
+                            PaymentStatus = Utilities.Enums.PaymentLevel.Unpaid,
+                            CreatedDate = DateTime.Now,
+                            ModifiedDate = DateTime.Now
                         };
                         var paymentDetailResult = _paymentDetailRepository.Create(paymentDetailToCreate);
                     }

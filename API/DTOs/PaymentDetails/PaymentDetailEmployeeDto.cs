@@ -6,5 +6,6 @@
         public DateTime DateRequest { get; set; }
         public int Duration { get; set; }
         public int TotalPay { get; set; }
+        public string PaymentStatus { get; set; }
     }
 }
