@@ -43,7 +43,8 @@ namespace API.Controllers
                                      Guid = p.Guid,
                                      DateRequest = o.DateRequest,
                                      Duration = o.Duration,
-                                     TotalPay = p.TotalPay
+                                     TotalPay = p.TotalPay,
+                                     PaymentStatus = p.PaymentStatus.ToString()
                                  };
             return Ok(new ResponseOKHandler<IEnumerable<PaymentDetailEmployeeDto>>(paymentDetails));
         }
