@@ -162,6 +162,24 @@ namespace API.Controllers
             return Ok(new ResponseOKHandler<IEnumerable<OvertimeReqDetailDto>>(overtimeDetails));
         }
 
+        // Endpoint to display Overtime request by EmployeeGuid
+        [HttpGet("employee-guid/{guid}")]
+        public IActionResult GetAllByEmployeeGuid(Guid guid)
+        {
+            var employeeOvertimeRequests = _overtimeRepository.GetByEmployeeGuid(guid);
+            if (!employeeOvertimeRequests.Any())
+            {
+                return NotFound(new ResponseErrorHandler
+                {
+                    Code = StatusCodes.Status404NotFound,
+                    Status = HttpStatusCode.NotFound.ToString(),
+                    Message = "No Overtime Requests found"
+                });
+            }
+            var data = employeeOvertimeRequests.Select(x => (OvertimeDto)x);
+            return Ok(new ResponseOKHandler<IEnumerable<OvertimeDto>>(data));
+        }
+
         // Endpoint to retrieve all Overtime data
         [HttpGet]
         public IActionResult GetAll()
