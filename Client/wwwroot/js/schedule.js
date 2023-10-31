@@ -1,3 +1,4 @@
+
 const schedule = document.querySelector('#schedule');
 const date = document.querySelector('#date');
 const daysContainer = document.querySelector('#days');
@@ -228,3 +229,5 @@ modalCloseTriggers.forEach((closeTrigger) => {
         }
     });
 });
+
+

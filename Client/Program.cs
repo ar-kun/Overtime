@@ -12,6 +12,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IOvertimeRepository, OvertimeRepository>();
 builder.Services.AddScoped(typeof(IRepository<,>), typeof(GeneralRepository<,>));
 
 // JWT Authentication Configuration
