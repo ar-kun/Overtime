@@ -3,6 +3,36 @@
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
 }
 
+@using System.Security.Claims;
+@{
+    var claimsIdentity = User.Identity as ClaimsIdentity;
+    var name = "user";
+    var email = "";
+    var guidEmployee = "";
+    if (claimsIdentity != null)
+    {
+        // Get the value of a specific claim
+        var emailClaim = claimsIdentity.FindFirst(ClaimTypes.Email);
+        var fullNameClaim = claimsIdentity.FindFirst(ClaimTypes.Name);
+        var identifierClaim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+        if (emailClaim != null)
+        {
+            email = emailClaim.Value;
+        }
+
+        if (identifierClaim != null)
+        {
+            guidEmployee = identifierClaim.Value;
+        }
+
+        if (fullNameClaim != null)
+        {
+            name = fullNameClaim.Value;
+        }
+    }
+}
+
 <div class="flex px-16 gap-10 py-5 max-h-screen">
     <section class="w-1/5 bg-gradient-to-r from-third to-secondary rounded-2xl text-white" id="sidebar">
         <img src="~/img/logo.png" alt="" class="px-5 pt-5" />
@@ -163,5 +193,9 @@
 </div>
 
 @section Scripts{
+    <script>
+        let employeeGuidClaim = "@guidEmployee"
+        let employeeEmail = "@email"
+    </script>
     <script src="~/js/dashboard.js" asp-append-version="true"></script>
 }

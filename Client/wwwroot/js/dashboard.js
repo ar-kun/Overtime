@@ -1,8 +1,12 @@
-﻿// Get monthly earnings
+﻿console.log("Ini dashboard js");
+console.log(employeeGuidClaim);
+console.log(employeeEmail);
+
+// Get monthly earnings
 $.ajax({
     type: 'GET',
     contentType: "application/json",
-    url: 'https://localhost:7166/api/PaymentDetail/employee-guid/0c6e30db-461e-4d91-a517-08dbd53b227c',
+    url: 'https://localhost:7166/api/PaymentDetail/employee-guid/' + employeeGuidClaim,
     dataType: 'json',
     success: function (data) {
         var totalPayMonthly = 0;
@@ -26,7 +30,7 @@ $.ajax({
 $.ajax({
     type: 'GET',
     contentType: "application/json",
-    url: 'https://localhost:7166/api/PaymentDetail/employee-guid/0c6e30db-461e-4d91-a517-08dbd53b227c',
+    url: 'https://localhost:7166/api/PaymentDetail/employee-guid/' + employeeGuidClaim,
     dataType: 'json',
     success: function (data) {
         var totalPayAnnual = 0;
@@ -50,7 +54,7 @@ $.ajax({
 $.ajax({
     type: 'GET',
     contentType: "application/json",
-    url: 'https://localhost:7166/api/Overtime/employee-guid/0c6e30db-461e-4d91-a517-08dbd53b227c',
+    url: 'https://localhost:7166/api/Overtime/employee-guid/' + employeeGuidClaim,
     dataType: 'json',
     success: function (data) {
         var weeklyDuration = 0;
@@ -86,7 +90,7 @@ $.ajax({
 $.ajax({
     type: 'GET',
     contentType: "application/json",
-    url: 'https://localhost:7166/api/Overtime/employee-guid/0c6e30db-461e-4d91-a517-08dbd53b227c',
+    url: 'https://localhost:7166/api/Overtime/employee-guid/' + employeeGuidClaim,
     dataType: 'json',
     success: function (data) {
         var weeklyCount = 0;
@@ -115,7 +119,7 @@ $.ajax({
 $.ajax({
     type: 'GET',
     contentType: "application/json",
-    url: 'https://localhost:7166/api/PaymentDetail/employee-guid/0c6e30db-461e-4d91-a517-08dbd53b227c',
+    url: 'https://localhost:7166/api/PaymentDetail/employee-guid/' + employeeGuidClaim,
     dataType: 'json',
     success: function (data) {
         var currentYear = new Date().getFullYear(); // get the current year
@@ -238,7 +242,7 @@ $.ajax({
 $.ajax({
     type: 'GET',
     contentType: "application/json",
-    url: 'https://localhost:7166/api/Overtime/employee-guid/0c6e30db-461e-4d91-a517-08dbd53b227c',
+    url: 'https://localhost:7166/api/Overtime/employee-guid/' + employeeGuidClaim,
     dataType: 'json',
     success: function (data) {
         var weeklyCount = {
