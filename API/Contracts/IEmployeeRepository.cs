@@ -11,5 +11,6 @@ namespace API.Contracts
         string? GetEmail(Guid? employeeGuid);
 
         Guid GetManagerGuid(string nik);
+        Employee? GetByGuid(Guid? managerGuid);
     }
 }

@@ -23,6 +23,7 @@
 
   <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+  @await RenderSectionAsync("CssSection", required: false)
   
  </head>
  <body class="bg-cover" style="background-image: url('/img/bg.png')">

@@ -6,28 +6,40 @@
 
 <div id="overtimeList"></div>
 <div class="flex px-16 gap-10 py-5 max-h-screen">
+    <!-- Side Bar -->
     <section class="w-1/5 bg-gradient-to-r from-third to-secondary rounded-2xl text-white" id="sidebar">
         <img src="~/img/logo.png" alt="" class="px-5 pt-5" />
         <div class="border-b-2 border-primary border-dashed w-full mb-4"></div>
+        <!-- Dashboard -->
         <div class="px-10 text-xl my-2">
-            <a href="" class="flex items-center gap-5">
+            <a href="~/dashboard" class="flex gap-5">
                 <i class="fa-regular fa-calendar-check"></i>
                 <p>Dashboard</p>
             </a>
             <div class="border-b-2 border-primary w-full mb-4"></div>
         </div>
+        <!-- Overtime -->
         <div class="px-10 text-xl my-2">
-            <a href="" class="flex items-center gap-5">
+            <a href="~/dashboard/overtime" class="flex gap-5">
                 <i class="fa-regular fa-rectangle-list"></i>
                 <p>Overtime</p>
             </a>
         </div>
+        <!-- Payroll -->
         <div class="px-10 text-xl my-2">
-            <a href="" class="flex items-center gap-5">
+            <a href="~/payroll" class="flex gap-5">
+                <i class="fa-regular fa-rectangle-list"></i>
+                <p>Payroll</p>
+            </a>
+        </div>
+        <!-- Employee -->
+        <div class="px-10 text-xl my-2">
+            <a href="" class="flex gap-5">
                 <i class="fa-solid fa-users"></i>
                 <p>Employees</p>
             </a>
         </div>
+        <!-- Logout -->
         <div class="px-10 text-xl my-2">
             <a href="/Logout" class="flex items-center gap-5">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>

@@ -8,5 +8,7 @@ namespace API.Contracts
         void Update(Overtime overtime);
 
         IEnumerable<Overtime> GetByManagerGuid(Guid guid);
+
+        IEnumerable<Overtime> GetByEmployeeGuid(Guid guid);
     }
 }

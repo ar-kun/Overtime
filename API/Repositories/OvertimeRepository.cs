@@ -23,5 +23,12 @@ namespace API.Repositories
                 .Where(o => o.Employee.ManagerGuid == guid)
                 .ToList();
         }
+        
+        public IEnumerable<Overtime> GetByEmployeeGuid(Guid guid)
+        {
+            return _context.Set<Overtime>()
+                .Where(o => o.EmployeeGuid == guid)
+                .ToList();
+        }
     }
 }
