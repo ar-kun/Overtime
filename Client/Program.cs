@@ -13,6 +13,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped(typeof(IRepository<,>), typeof(GeneralRepository<,>));
+builder.Services.AddScoped<IPaymentDetailRepository, PaymentDetailRepository>();
 
 // JWT Authentication Configuration
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -61,8 +62,6 @@ app.Use(async (context, next) =>
 
     await next();
 });
-
-app.UseAuthorization();
 
 app.UseAuthorization();
 

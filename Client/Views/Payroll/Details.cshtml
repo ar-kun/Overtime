@@ -1,0 +1,196 @@
+﻿@model API.DTOs.PaymentDetails.EmployeesPayrollDto
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_LayoutDashboard";
+}
+
+<section class="w-4/5 backdrop-blur-md text-third px-10 relative rounded-2xl" id="payrollList">
+    <div class="">
+        <div class="flex flex-wrap justify-between items-center mb-5">
+            <h1 class="text-3xl font-bold">Payroll List</h1>
+            <div class="flex gap-5 items-center">
+                <a href="" class="bg-third px-5 py-2 rounded-lg shadow-md text-white shadow-slate-600 hover:bg-secondary hover:shadow-none">History Overtime</a>
+                <a href=""><i class="fa-regular fa-bell text-2xl"></i></a>
+                <div class="w-14 h-1/4rounded-full">
+                    <img src="~/img/profile.png" alt="" class="" />
+                </div>
+            </div>
+            <div class="border-b-2 border-slate-700 border-dashed w-full"></div>
+        </div>
+    </div>
+    <div class="border-2 border-slate-500 rounded-lg p-5 relative">
+        <table id="payrollTable" class="display" style="width: 100%">
+            <tbody>
+                <tr height="35">
+                    <td class="text-left" width="25%">NIK</td>
+                    <td id="nik" class="text-left">: @Html.DisplayFor(model => model.Nik)</td>
+                </tr>
+                <tr height="35">
+                    <td class="text-left" width="25%">Name</td>
+                    <td id="fullName" class="text-left">: @Html.DisplayFor(model => model.FullName)</td>
+                </tr>
+                <tr height="35">
+                    <td class="text-left" width="25%">Gender</td>
+                    <td id="gender" class="text-left">: @Html.DisplayFor(model => model.Gender)</td>
+                </tr>
+                <tr height="35">
+                    <td class="text-left" width="25%">Email</td>
+                    <td id="email" class="text-left">: @Html.DisplayFor(model => model.Email)</td>
+                </tr>
+                <tr height="35">
+                    <td class="text-left" width="25%">Phone Number</td>
+                    <td id="phoneNumber" class="text-left">: @Html.DisplayFor(model => model.PhoneNumber)</td>
+                </tr>
+                <tr height="35">
+                    <td class="text-left" width="25%">Salary</td>
+                    <td id="salary" class="text-left">: @Html.DisplayFor(model => model.Salary)</td>
+                </tr>
+                <tr height="35">
+                    <td class="text-left" width="25%">Manager Name</td>
+                    <td id="managerFullName" class="text-left">: @Html.DisplayFor(model => model.ManagerFullName)</td>
+                </tr>
+                <tr height="35">
+                    <td class="text-left" width="25%">Overtime Date</td>
+                    <td id="overtimeDate" class="text-left">: @Html.DisplayFor(model => model.OvertimeDate)</td>
+                </tr>
+                <tr height="35">
+                    <td class="text-left" width="25%">Duration</td>
+                    <td id="duration" class="text-left">: @Html.DisplayFor(model => model.Duration)</td>
+                </tr>
+                <tr height="35">
+                    <td class="text-left" width="25%">Type of Day</td>
+                    <td id="typeOfDay" class="text-left">: @Html.DisplayFor(model => model.TypeOfDay)</td>
+                </tr>
+                <tr height="35">
+                    <td class="text-left" width="25%">Overtime Pay</td>
+                    <td id="totalPay" class="text-left">: @Html.DisplayFor(model => model.TotalPay)</td>
+                </tr>
+                <tr height="35">
+                    <td class="text-left" width="25%">Status</td>
+                    <td id="paymentStatus" class="text-left">: @Html.DisplayFor(model => model.PaymentStatus)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+@section Scripts{
+    <script src="~/js/payrollDetail.js" asp-append-version="true"></script>
+}
+
+@* <h1>Details</h1>
+
+<div>
+    <h4>EmployeesPayrollDto</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Guid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Guid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EmployeeGuid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EmployeeGuid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nik)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nik)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Salary)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Salary)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ManagerGuid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ManagerGuid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ManagerFullName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ManagerFullName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.OvertimeDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.OvertimeDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Duration)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TypeOfDay)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TypeOfDay)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalPay)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TotalPay)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PaymentStatus)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PaymentStatus)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ModifiedDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ModifiedDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
+ *@
