@@ -54,5 +54,12 @@ namespace API.Repositories
 
             throw new Exception("Manager not found");
         }
+
+        public Employee? GetByGuid(Guid? managerGuid)
+        {
+            var entity = _context.Set<Employee>().Find(managerGuid);
+            _context.ChangeTracker.Clear();
+            return entity;
+        }
     }
 }

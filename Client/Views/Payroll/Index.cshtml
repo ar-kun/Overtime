@@ -4,28 +4,63 @@
     ViewData["Title"] = "Index";
     Layout = "_LayoutDashboard";
 }
-
+<!-- Main modal -->
+@* <div id="default-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Terms of Service
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.
+                </p>
+                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
+                </p>
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                <button data-modal-hide="default-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">I accept</button>
+                <button data-modal-hide="default-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
+            </div>
+        </div>
+    </div>
+</div>
+ *@
 <div class="flex px-16 gap-10 py-5 max-h-screen">
+    <!-- Side Bar -->
     <section class="w-1/5 bg-gradient-to-r from-third to-secondary rounded-2xl text-white" id="sidebar">
         <img src="~/img/logo.png" alt="" class="px-5 pt-5" />
         <div class="border-b-2 border-primary border-dashed w-full mb-4"></div>
         <!-- Dashboard -->
         <div class="px-10 text-xl my-2">
-            <a href="dashboard.html" class="flex gap-5">
+            <a href="~/dashboard" class="flex gap-5">
                 <i class="fa-regular fa-calendar-check"></i>
                 <p>Dashboard</p>
             </a>
         </div>
         <!-- Overtime -->
         <div class="px-10 text-xl my-2">
-            <a href="overtime.html" class="flex gap-5">
+            <a href="~/overtime" class="flex gap-5">
                 <i class="fa-regular fa-rectangle-list"></i>
                 <p>Overtime</p>
             </a>
         </div>
         <!-- Payroll -->
         <div class="px-10 text-xl my-2">
-            <a href="overtime.html" class="flex gap-5">
+            <a href="~/payroll" class="flex gap-5">
                 <i class="fa-regular fa-rectangle-list"></i>
                 <p>Payroll</p>
             </a>
@@ -39,7 +74,9 @@
             </a>
         </div>
     </section>
+    <!-- Header and Content -->
     <section class="w-4/5 backdrop-blur-md text-third px-10 relative rounded-2xl" id="payrollList">
+        <!-- Header -->
         <div class="">
             <div class="flex flex-wrap justify-between items-center mb-5">
                 <h1 class="text-3xl font-bold">Payroll List</h1>
@@ -53,6 +90,8 @@
                 <div class="border-b-2 border-slate-700 border-dashed w-full"></div>
             </div>
         </div>
+        
+        <!-- Content -->
         <div class="border-2 border-slate-500 rounded-lg p-5 relative">
             <table id="payrollTable" class="display" style="width: 100%">
                 <thead>
@@ -77,6 +116,7 @@
 @section CssSection{
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
 }
 
 @section Scripts{
@@ -88,126 +128,6 @@
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
+    @* <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script> *@
     <script src="~/js/payrollDetail.js" asp-append-version="true"></script>
 }
-
-@* <h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Guid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmployeeGuid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Salary)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ManagerGuid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ManagerFullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OvertimeDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Duration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TypeOfDay)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalPay)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PaymentStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Guid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeGuid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Salary)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ManagerGuid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ManagerFullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OvertimeDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeOfDay)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPay)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaymentStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedDate)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
- *@
