@@ -62,7 +62,7 @@
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <!-- Guid -->
-                <input asp-for="Guid" type="text" class="form-control hidden">
+                <input asp-for="Guid" type="text" id="editPaymentGuid" class="form-control hidden">
                 <div class="form-group mb-6">
                     <!-- Overtime Pay -->
                     <label asp-for="TotalPay" class="control-label block mb-1 text-sm font-medium text-gray-900 dark:text-white">Overtime Pay</label>
@@ -78,20 +78,19 @@
                     </select>
                     <span asp-validation-for="PaymentStatus" class="text-danger"></span>
                 </div>
-                <div class="flex justify-center">
-                    <div class="form-group">
-                        <button type="submit" value="Save" id="editSubmitPayroll" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mx-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 w-20">
-                            Save
-                        </button>
-                    </div>
-                    <div>
-                        <a type="button" asp-action="Index" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mx-1 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 w-20">
-                            Cancel
-                        </a>
-                    </div>
-                </div>
-                
             </form>
+            <div class="flex justify-center">
+                <div>
+                    <button type="submit" id="editSubmitPayroll" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mx-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 w-20">
+                        Save
+                    </button>
+                </div>
+                <div>
+                    <a type="button" asp-action="Index" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mx-1 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 w-20">
+                        Cancel
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 </div>
@@ -101,7 +100,7 @@
 }
 
 @section Scripts {
-    <script src="~/assets/sweetalert/dist/sweetalert2.all.min.js" asp-append-version="true"></script>
+    <script src="~/sweetalert/dist/sweetalert2.all.min.js" asp-append-version="true"></script>
     <script src="~/js/payrollEdit.js" asp-append-version="true"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -62,58 +62,69 @@
             <table id="payrollTable" class="display" style="width: 100%">
                 <tbody>
                     <tr height="35">
-                        <td class="text-left" width="25%">NIK</td>
+                        <td class="text-left font-bold" width="20%">NIK</td>
                         <td id="nik" class="text-left">: @Html.DisplayFor(model => model.Nik)</td>
                     </tr>
                     <tr height="35">
-                        <td class="text-left" width="25%">Name</td>
+                        <td class="text-left font-bold">Name</td>
                         <td id="fullName" class="text-left">: @Html.DisplayFor(model => model.FullName)</td>
                     </tr>
                     <tr height="35">
-                        <td class="text-left" width="25%">Gender</td>
+                        <td class="text-left font-bold">Gender</td>
                         <td id="gender" class="text-left">: @Html.DisplayFor(model => model.Gender)</td>
                     </tr>
                     <tr height="35">
-                        <td class="text-left" width="25%">Email</td>
+                        <td class="text-left font-bold">Email</td>
                         <td id="email" class="text-left">: @Html.DisplayFor(model => model.Email)</td>
                     </tr>
                     <tr height="35">
-                        <td class="text-left" width="25%">Phone Number</td>
+                        <td class="text-left font-bold">Phone Number</td>
                         <td id="phoneNumber" class="text-left">: @Html.DisplayFor(model => model.PhoneNumber)</td>
                     </tr>
                     <tr height="35">
-                        <td class="text-left" width="25%">Salary</td>
+                        <td class="text-left font-bold">Salary</td>
                         <td id="salary" class="text-left">: @Html.DisplayFor(model => model.Salary)</td>
                     </tr>
                     <tr height="35">
-                        <td class="text-left" width="25%">Manager Name</td>
+                        <td class="text-left font-bold">Manager Name</td>
                         <td id="managerFullName" class="text-left">: @Html.DisplayFor(model => model.ManagerFullName)</td>
                     </tr>
                     <tr height="35">
-                        <td class="text-left" width="25%">Overtime Date</td>
+                        <td class="text-left font-bold">Overtime Date</td>
                         <td id="overtimeDate" class="text-left">: @Html.DisplayFor(model => model.OvertimeDate)</td>
                     </tr>
                     <tr height="35">
-                        <td class="text-left" width="25%">Duration</td>
+                        <td class="text-left font-bold">Duration</td>
                         <td id="duration" class="text-left">: @Html.DisplayFor(model => model.Duration)</td>
                     </tr>
                     <tr height="35">
-                        <td class="text-left" width="25%">Type of Day</td>
+                        <td class="text-left font-bold">Type of Day</td>
                         <td id="typeOfDay" class="text-left">: @Html.DisplayFor(model => model.TypeOfDay)</td>
                     </tr>
                     <tr height="35">
-                        <td class="text-left" width="25%">Overtime Pay</td>
+                        <td class="text-left font-bold">Overtime Pay</td>
                         <td id="totalPay" class="text-left">: @Html.DisplayFor(model => model.TotalPay)</td>
                     </tr>
                     <tr height="35">
-                        <td class="text-left" width="25%">Status</td>
-                        <td id="paymentStatus" class="text-left">: @Html.DisplayFor(model => model.PaymentStatus)</td>
+                        <td class="text-left font-bold">Status</td>
+                        @if (Model.PaymentStatus == "Paid")
+                        {
+                            <td id="paymentStatus" class="text-left">: <span class="bg-green-100 text-green-800 text-sm font-bold mr-2 px-2.5 py-1 rounded-full dark:bg-green-900 dark:text-green-300">@Html.DisplayFor(model => model.PaymentStatus)</span></td>
+                        }
+                        else if (Model.PaymentStatus == "Unpaid")
+                        {
+                            <td id="paymentStatus" class="text-left">: <span class="bg-red-100 text-red-800 text-sm font-bold mr-2 px-2.5 py-1 rounded-full dark:bg-red-900 dark:text-red-300">@Html.DisplayFor(model => model.PaymentStatus)</span></td>
+                        }
                     </tr>
                 </tbody>
             </table>
         </div>
     </section>
 </div>
+@section CssSection{
+    <script src="~/sweetalert/dist/sweetalert2.all.min.js" asp-append-version="true"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
+}
 
 @section Scripts{
     <script src="~/js/payrollDetail.js" asp-append-version="true"></script>

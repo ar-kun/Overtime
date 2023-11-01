@@ -1,5 +1,15 @@
 $(document).ready(function () {
+    // Check if a success message exists in localStorage
+    const successMessage = localStorage.getItem("successMessage");
 
+    if (successMessage) {
+        // Display the success message
+        $("#successAlert").removeClass("hidden");
+        // Clear the success message from localStorage
+        localStorage.removeItem("successMessage");
+    }
+
+    // Payroll Table
     $('#payrollTable').DataTable({
         ajax: {
             url: "payroll/GetPayrollList/",
