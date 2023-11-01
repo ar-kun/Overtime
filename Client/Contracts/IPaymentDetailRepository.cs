@@ -1,8 +1,8 @@
-﻿using API.DTOs.PaymentDetails;
+﻿using API.Models;
 
 namespace Client.Contracts
 {
-    public interface IPaymentDetailRepository : IRepository<EmployeesPayrollDto, Guid>
+    public interface IPaymentDetailRepository : IRepository<PaymentDetail, Guid>
     {
     }
 }
