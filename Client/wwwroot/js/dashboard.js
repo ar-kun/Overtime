@@ -144,22 +144,27 @@ $.ajax({
                         'rgba(78, 115, 223, 0.05)'
                     ],
                     borderColor: [
-                        'rgba(78, 115, 223, 1)'
+                        /*'rgba(78, 115, 223, 1)'*/
+                        '#163270'
                     ],
-                    borderWidth: 2,
+                    borderWidth: 3,
                     pointRadius: 3,
                     pointBackgroundColor: [
-                        'rgba(78, 115, 223, 1)'
+                        /*'rgba(78, 115, 223, 1)'*/
+                        '#163270'
                     ],
                     pointBorderColor: [
-                        'rgba(78, 115, 223, 1)'
+                        /*'rgba(78, 115, 223, 1)'*/
+                        '#163270'
                     ],
-                    pointHoverRadius: 3,
+                    pointHoverRadius: 4,
                     pointHoverBackgroundColor: [
-                        'rgba(78, 115, 223, 1)'
+                        /*'rgba(78, 115, 223, 1)'*/
+                        '#163270'
                     ],
                     pointHoverBorderColor: [
-                        'rgba(78, 115, 223, 1)'
+                        /*'rgba(78, 115, 223, 1)'*/
+                        '#163270'
                     ],
                     pointHitRadius: 10,
                     pointBorderWidth: 2,
@@ -238,7 +243,7 @@ $.ajax({
     }
 });
 
-// Chart for status overtime
+// Chart for status overtime (weekly)
 $.ajax({
     type: 'GET',
     contentType: "application/json",
