@@ -2,8 +2,11 @@
 using API.DTOs.Overtimes;
 using API.DTOs.PaymentDetails;
 using API.Models;
+using API.Repositories;
+using API.Utilities;
 using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using System.Net;
 
 namespace API.Controllers
@@ -13,12 +16,102 @@ namespace API.Controllers
     public class PaymentDetailController : ControllerBase
     {
         private readonly IPaymentDetailRepository _paymentDetailRepository;
-        private readonly IOvertimeRepository _overtimeRepository; 
+        private readonly IOvertimeRepository _overtimeRepository;
+        private readonly IEmployeeRepository _employeeRepository;
 
-        public PaymentDetailController(IPaymentDetailRepository paymentDetailRepository, IOvertimeRepository overtimeRepository)
+        public PaymentDetailController(IPaymentDetailRepository paymentDetailRepository, IOvertimeRepository overtimeRepository, IEmployeeRepository employeeRepository)
         {
             _paymentDetailRepository = paymentDetailRepository;
             _overtimeRepository = overtimeRepository;
+            _employeeRepository = employeeRepository;
+        }
+
+        [HttpGet("details")] // Endpoint HTTP GET requests for Get All Employees Payment Details
+        public IActionResult GetDetails()
+        {
+            var paymentDetails = _paymentDetailRepository.GetAll();
+            var overtimes = _overtimeRepository.GetAll();
+            var employees = _employeeRepository.GetAll();
+
+            // Check if there is any data
+            if (!(paymentDetails.Any() && overtimes.Any() && employees.Any()))
+            {
+                return NotFound(new ResponseErrorHandler
+                {
+                    Code = StatusCodes.Status404NotFound,
+                    Status = HttpStatusCode.NotFound.ToString(),
+                    Message = "Data Not Found"
+                });
+            }
+
+            var empsPaymentDetails = from pd in paymentDetails
+                                     join o in overtimes on pd.Guid equals o.Guid
+                                     join e in employees on o.EmployeeGuid equals e.Guid
+                                     join m in employees on e.ManagerGuid equals m.Guid
+                                     select new EmployeesPayrollDto
+                                     {
+                                         Guid = pd.Guid,
+                                         EmployeeGuid = o.EmployeeGuid,
+                                         Nik = e.Nik,
+                                         FullName = string.Concat(e.FirstName, " ", e.LastName),
+                                         Gender = e.Gender.ToString(),
+                                         Email = e.Email,
+                                         PhoneNumber = e.PhoneNumber,
+                                         Salary = e.Salary.ToString("C", new CultureInfo("id-ID")),
+                                         ManagerGuid = e.ManagerGuid,
+                                         ManagerFullName = string.Concat(m.FirstName, " ", m.LastName),
+                                         OvertimeDate = o.DateRequest.ToString("dd MMM yyyy"),
+                                         Duration = string.Concat(o.Duration, " hours"),
+                                         TypeOfDay = o.TypeOfDay.GetDisplayName(),
+                                         TotalPay = pd.TotalPay.ToString("C", new CultureInfo("id-ID")),
+                                         PaymentStatus = pd.PaymentStatus.ToString(),
+                                         CreatedDate = pd.CreatedDate.ToString("dd MMM yyyy"),
+                                         ModifiedDate = pd.ModifiedDate.ToString("dd MMM yyyy")
+                                     };
+
+            return Ok(new ResponseOKHandler<IEnumerable<EmployeesPayrollDto>>(empsPaymentDetails));
+        }
+
+        [HttpGet("details/{guid}")] // Endpoint to display payment details by EmployeeGuid
+        public IActionResult GetDetailsByGuid(Guid guid)
+        {
+            var paymentDetail = _paymentDetailRepository.GetByGuid(guid);
+            var overtime = _overtimeRepository.GetByGuid(paymentDetail.Guid);
+            var employee = _employeeRepository.GetByGuid(overtime.EmployeeGuid);
+            var manager = _employeeRepository.GetByGuid(employee.ManagerGuid);
+
+            if (paymentDetail is null)
+            {
+                // Returns a 404 Not Found response with code, status and message if the result is empty
+                return NotFound(new ResponseErrorHandler
+                {
+                    Code = StatusCodes.Status404NotFound,
+                    Status = HttpStatusCode.NotFound.ToString(),
+                    Message = "Data Not Found"
+                });
+            }
+
+            var payrollDetails = new EmployeesPayrollDto
+            {
+                Guid = paymentDetail.Guid,
+                EmployeeGuid = overtime.EmployeeGuid,
+                Nik = employee.Nik,
+                FullName = string.Concat(employee.FirstName, " ", employee.LastName),
+                Gender = employee.Gender.ToString(),
+                Email = employee.Email,
+                PhoneNumber = employee.PhoneNumber,
+                Salary = employee.Salary.ToString("C", new CultureInfo("id-ID")),
+                ManagerGuid = employee.ManagerGuid,
+                ManagerFullName = string.Concat(manager.FirstName, " ", manager.LastName),
+                OvertimeDate = overtime.DateRequest.ToString("dd MMM yyyy"),
+                Duration = string.Concat(overtime.Duration, " hours"),
+                TypeOfDay = overtime.TypeOfDay.GetDisplayName(),
+                TotalPay = paymentDetail.TotalPay.ToString("C", new CultureInfo("id-ID")),
+                PaymentStatus = paymentDetail.PaymentStatus.ToString(),
+                CreatedDate = paymentDetail.CreatedDate.ToString("dd MMM yyyy"),
+                ModifiedDate = paymentDetail.ModifiedDate.ToString("dd MMM yyyy")
+            };
+            return Ok(new ResponseOKHandler<EmployeesPayrollDto>(payrollDetails));
         }
 
         [HttpGet("employee-guid/{guid}")] // Endpoint to display payment details by EmployeeGuid

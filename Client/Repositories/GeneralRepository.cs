@@ -36,6 +36,17 @@ namespace Client.Repositories
             return entityVM;
         }
 
+        public async Task<ResponseOKHandler<IEnumerable<Entity>>> GetDetails()
+        {
+            ResponseOKHandler<IEnumerable<Entity>> entityVM = null;
+            using (var response = await httpClient.GetAsync(request + "details/"))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entityVM = JsonConvert.DeserializeObject<ResponseOKHandler<IEnumerable<Entity>>>(apiResponse);
+            }
+            return entityVM;
+        }
+
         public async Task<ResponseOKHandler<IEnumerable<Entity>>> Get()
         {
             ResponseOKHandler<IEnumerable<Entity>> entityVM = null;
@@ -43,6 +54,18 @@ namespace Client.Repositories
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 entityVM = JsonConvert.DeserializeObject<ResponseOKHandler<IEnumerable<Entity>>>(apiResponse);
+            }
+            return entityVM;
+        }
+
+        public async Task<ResponseOKHandler<Entity>> GetDetails(TId id)
+        {
+            ResponseOKHandler<Entity> entityVM = null;
+
+            using (var response = await httpClient.GetAsync(request + "details/" + id))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entityVM = JsonConvert.DeserializeObject<ResponseOKHandler<Entity>>(apiResponse);
             }
             return entityVM;
         }
