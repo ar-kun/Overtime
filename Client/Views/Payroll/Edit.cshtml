@@ -61,30 +61,36 @@
         <div class="border-2 border-slate-500 rounded-lg p-5 relative">
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <!-- Guid -->
+                <input asp-for="Guid" type="text" class="form-control hidden">
                 <div class="form-group mb-6">
                     <!-- Overtime Pay -->
                     <label asp-for="TotalPay" class="control-label block mb-1 text-sm font-medium text-gray-900 dark:text-white">Overtime Pay</label>
-                    <input asp-for="TotalPay" type="text" id="base-input" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <input asp-for="TotalPay" type="text" id="editOvertimePay" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <span asp-validation-for="TotalPay" class="text-danger"></span>
                 </div>
                 <div class="form-group mb-6">
                     <!-- PaymentStatus -->
                     <label asp-for="PaymentStatus" class="form-label control-label block mb-1 text-sm font-medium text-gray-900 dark:text-white">Status</label>
-                    <select asp-for="PaymentStatus" id="editStatus" name="paymentStatus" class="form-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select asp-for="PaymentStatus" id="editPaymentStatus" name="paymentStatus" class="form-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option id="unpaid" value=0>Unpaid</option>
                         <option id="paid" value=1>Paid</option>
                     </select>
                     <span asp-validation-for="PaymentStatus" class="text-danger"></span>
                 </div>
+                <div class="flex justify-center">
+                    <div class="form-group">
+                        <button type="submit" value="Save" id="editSubmitPayroll" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mx-1 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 w-20">
+                            Save
+                        </button>
+                    </div>
+                    <div>
+                        <a type="button" asp-action="Index" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mx-1 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 w-20">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
                 
-                <div class="form-group">
-                    <button type="submit" value="Save" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                        Save
-                    </button>
-                </div>
-                <div>
-                    <a type="button" asp-action="Index" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Cancel</a>
-                </div>
             </form>
         </div>
     </section>
@@ -95,6 +101,7 @@
 }
 
 @section Scripts {
-    <script src="~/js/payrollDetail.js" asp-append-version="true"></script>
+    <script src="~/assets/sweetalert/dist/sweetalert2.all.min.js" asp-append-version="true"></script>
+    <script src="~/js/payrollEdit.js" asp-append-version="true"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
