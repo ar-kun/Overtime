@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Employee | Dashboard";
+    ViewData["Title"] = "Manager | Dashboard";
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
 }
 
@@ -8,7 +8,7 @@
     var claimsIdentity = User.Identity as ClaimsIdentity;
     var name = "user";
     var email = "";
-    var guidEmployee = "";
+    var guidManager = "";
     if (claimsIdentity != null)
     {
         // Get the value of a specific claim
@@ -23,7 +23,7 @@
 
         if (identifierClaim != null)
         {
-            guidEmployee = identifierClaim.Value;
+            guidManager = identifierClaim.Value;
         }
 
         if (fullNameClaim != null)
@@ -193,8 +193,7 @@
 
 @section Scripts{
     <script>
-        let employeeGuidClaim = "@guidEmployee"
-        let employeeEmail = "@email"
+        let managerGuidClaim = "@guidManager"
     </script>
-    <script src="~/js/dashboardEmployee.js" asp-append-version="true"></script>
+    <script src="~/js/dashboardManager.js" asp-append-version="true"></script>
 }
