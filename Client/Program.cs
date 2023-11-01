@@ -26,8 +26,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidIssuer = builder.Configuration["JWTService:Issuer"],
             ValidateAudience = true,
             ValidAudience = builder.Configuration["JWTService:Audience"],
-            IssuerSigningKey =
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTService:SecretKey"])),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTService:SecretKey"])),
             ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero
         };
@@ -62,7 +61,7 @@ app.Use(async (context, next) =>
     await next();
 });
 
-app.UseAuthorization();
+app.UseAuthentication();
 
 app.UseAuthorization();
 
