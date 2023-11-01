@@ -1,5 +1,10 @@
 ﻿console.log("Ini dashboard payroll js");
 
+let OTDate = "27 Oct 2023";
+let otdate = new Date(OTDate);
+let otmonth = otdate.toLocaleString('default', { month: 'long' });
+console.log("Ini month : ",otmonth);
+
 // Get total count status payment of all request
 $.ajax({
     type: 'GET',
