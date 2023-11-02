@@ -37,31 +37,43 @@
     <section class="w-1/5 bg-gradient-to-r from-third to-secondary rounded-2xl text-white" id="sidebar">
         <img src="~/img/logo.png" alt="" class="px-5 pt-5" />
         <div class="border-b-2 border-primary border-dashed w-full mb-4"></div>
+        <!-- Dashboard -->
         <div class="px-10 text-xl my-2">
-            <a href="" class="flex items-center gap-5">
+            <a href="~/manager/dashboard" class="flex items-center gap-5">
                 <i class="fa-regular fa-calendar-check"></i>
                 <p>Dashboard</p>
             </a>
             <div class="border-b-2 border-primary w-full mb-4"></div>
         </div>
+        <!-- Overtime Requested -->
         <div class="px-10 text-xl my-2">
             <a href="RequestOvertime" class="flex items-center gap-5">
                 <i class="fa-regular fa-rectangle-list"></i>
-                <p>Request</p>
+                <p>Requested</p>
             </a>
         </div>
+        <!-- Overtime Schedule -->
         <div class="px-10 text-xl my-2">
-            <a href="payroll" class="flex items-center gap-5">
-                <i class="fa-solid fa-users"></i>
+            <a href="~/manager/overtimeschedule" class="flex items-center gap-5">
+                <i class="fa-regular fa-clock"></i>
+                <p>Overtimes</p>
+            </a>
+        </div>
+        <!-- Payment List -->
+        <div class="px-10 text-xl my-2">
+            <a href="~/manager/payroll" class="flex items-center gap-5">
+                <i class="fa-solid fa-money-bill-wave"></i>
                 <p>Payroll</p>
             </a>
         </div>
+        <!-- Employee List -->
         <div class="px-10 text-xl my-2">
-            <a href="employees" class="flex items-center gap-5">
+            <a href="~/manager/employees" class="flex items-center gap-5">
                 <i class="fa-solid fa-users"></i>
                 <p>Employees</p>
             </a>
         </div>
+        <!-- Logout -->
         <div class="px-10 text-xl my-2">
             <a href="/Logout" class="flex items-center gap-5">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
