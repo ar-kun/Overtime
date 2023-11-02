@@ -1,4 +1,14 @@
 $(document).ready(function () {
+    // Check if a success message exists in localStorage
+    const successMessage = localStorage.getItem("successMessage");
+
+    if (successMessage) {
+        // Display the success message
+        $("#successAlert").removeClass("hidden");
+        // Clear the success message from localStorage
+        localStorage.removeItem("successMessage");
+    }
+
     // Payroll Table
     $('#myOvertimeTable').DataTable({
         ajax: {
@@ -89,7 +99,6 @@ $(document).ready(function () {
                         url: `https://localhost:7166/api/Overtime/${guid}`,
                         type: 'DELETE'
                     }).done((result) => {
-
                         // Refresh table
                         $('#myOvertimeTable').DataTable().ajax.reload();
 
@@ -112,7 +121,43 @@ $(document).ready(function () {
             })
         }
     });
+
+    $("#submitRequest").click(function () {
+        submitForm();
+        return false;
+    });
 });
+
+// Function to handle request overtime form
+function submitForm() {
+    let req = {};
+    req.employeeGuid = guidEmployee;
+    req.dateRequest = $("#dateRequest").val();
+    req.duration = parseInt($("#duration").val());
+    req.remarks = $("#remarks").val();
+
+    let jsonString = JSON.stringify(req);
+    console.log(jsonString);
+
+    $.ajax({
+        url: "https://localhost:7166/api/Overtime",
+        type: "POST",
+        cache: false,
+        data: jsonString,
+        contentType: "application/json"
+    }).done((result) => {
+        // Save the success message in localStorage
+        localStorage.setItem("successMessage", "Overtime request has been sent to the manager");
+
+        // Redirect to Index page
+        window.location.href = '/employee/myovertime';
+    }).fail((jqXHR, textStatus, errorThrown) => {
+        let alertMsg = jqXHR.responseJSON.message;
+
+        // Fail Alert
+        Swal.fire('Failed to create', alertMsg, 'warning');
+    });
+}
 
 // Convert format date
 function formatDate(inputDate) {
