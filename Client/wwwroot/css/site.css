@@ -14,3 +14,6 @@
 .prev-date {
  @apply text-lg text-gray-400 hover:text-primary hover:bg-secondary/50 rounded-lg;
 }
+.event {
+    @apply border-b-2 border-secondary;
+}
