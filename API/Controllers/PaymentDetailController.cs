@@ -119,6 +119,8 @@ namespace API.Controllers
         {
             var result = _paymentDetailRepository.GetByEmployeeGuid(guid);
             var overtimes = _overtimeRepository.GetAll();
+            var employees = _employeeRepository.GetAll();
+
             if (result is null)
             {
                 // Returns a 404 Not Found response with code, status and message if the result is empty
@@ -131,15 +133,29 @@ namespace API.Controllers
             }
             var paymentDetails = from p in result
                                  join o in overtimes on p.Guid equals o.Guid
-                                 select new PaymentDetailEmployeeDto
+                                 join e in employees on o.EmployeeGuid equals e.Guid
+                                 join m in employees on e.ManagerGuid equals m.Guid
+                                 select new EmployeesPayrollDto
                                  {
                                      Guid = p.Guid,
-                                     DateRequest = o.DateRequest,
-                                     Duration = o.Duration,
-                                     TotalPay = p.TotalPay,
-                                     PaymentStatus = p.PaymentStatus.ToString()
+                                     EmployeeGuid = o.EmployeeGuid,
+                                     Nik = e.Nik,
+                                     FullName = string.Concat(e.FirstName, " ", e.LastName),
+                                     Gender = e.Gender.ToString(),
+                                     Email = e.Email,
+                                     PhoneNumber = e.PhoneNumber,
+                                     Salary = e.Salary.ToString("C", new CultureInfo("id-ID")),
+                                     ManagerGuid = e.ManagerGuid,
+                                     ManagerFullName = string.Concat(m.FirstName, " ", m.LastName),
+                                     OvertimeDate = o.DateRequest.ToString("dd MMM yyyy"),
+                                     Duration = string.Concat(o.Duration, " hours"),
+                                     TypeOfDay = o.TypeOfDay.GetDisplayName(),
+                                     TotalPay = p.TotalPay.ToString("C", new CultureInfo("id-ID")),
+                                     PaymentStatus = p.PaymentStatus.ToString(),
+                                     CreatedDate = p.CreatedDate.ToString("dd MMM yyyy"),
+                                     ModifiedDate = p.ModifiedDate.ToString("dd MMM yyyy")
                                  };
-            return Ok(new ResponseOKHandler<IEnumerable<PaymentDetailEmployeeDto>>(paymentDetails));
+            return Ok(new ResponseOKHandler<IEnumerable<EmployeesPayrollDto>>(paymentDetails));
         }
 
         [HttpGet] // Endpoint HTTP GET requests for GetAll()
