@@ -33,5 +33,10 @@ namespace Client.Controllers
         {
             return View();
         }
+
+        public IActionResult RequestOvertime()
+        {
+            return View();
+        }
     }
 }
