@@ -1,0 +1,46 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unauthorized</title>
+    <!-- Custom styles for this template-->
+    <link href="~/css/errorPage/errorPage.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- 404 Error Text -->
+        <div class="text-center">
+            <div class="error mx-auto" data-text="401">401</div>
+            <p class="lead text-gray-800 mb-5">Unauthorized</p>
+            <p class="text-gray-500 mb-0">It looks like you are not authorized...</p>
+            <a href="/Auth">&larr; Go to Login Page</a>
+            <a id="countdown"></a>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+
+    <script src="~/js/dashboard.min.js"></script>
+</body>
+
+<script>
+    let timer = 5
+    setInterval(() => {
+        document.getElementById('countdown').style.display = 'none';
+        document.getElementById('countdown').innerHTML = timer;
+        timer--;
+
+        if (timer === 0) {
+            location.href = "/Auth";
+        }
+    }, 1000)
+</script>
+
+</html>
