@@ -1,6 +1,5 @@
 ﻿using API.Contracts;
 using API.DTOs.Accounts;
-using API.DTOs.Roles;
 using API.Models;
 using API.Utilities.Handlers;
 using Microsoft.AspNetCore.Authorization;
@@ -275,6 +274,7 @@ namespace API.Controllers
                 }
                 // Generates a token from the specified collection of claims using the token handler.
                 var claims = new List<Claim>();
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, employee.Guid.ToString()));
                 claims.Add(new Claim(ClaimTypes.Email, employee.Email));
                 claims.Add(new Claim(ClaimTypes.Name, string.Concat(employee.FirstName + " " + employee.LastName)));
                 // Add RoleName claim
