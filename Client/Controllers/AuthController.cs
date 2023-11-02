@@ -24,9 +24,29 @@ namespace Client.Controllers
 
             if (result.Status == "OK")
             {
-
                 HttpContext.Session.SetString("JWToken", result.Data.Token);
-                return RedirectToAction("Index", "Dashboard");
+                var JWTokenn = result.Data.Token;
+                var dataClaims = await _accountRepository.Claims(JWTokenn);
+                var role = dataClaims.Data.Role;
+                if (role.Contains("Employee") && !role.Contains("Manager") && !role.Contains("Payroll"))
+                {
+                    return RedirectToAction("Dashboard", "Employee");
+                }
+                else if (role.Contains("Employee") && role.Contains("Manager"))
+                {
+                    // Display a page that allows the user to choose which dashboard to go to
+                    return View("ChooseDashboardManager");
+                }
+                else if (role.Contains("Employee") && role.Contains("Payroll"))
+                {
+                    // Display a page that allows the user to choose which dashboard to go to
+                    return View("ChooseDashboardPayroll");
+                }
+                else
+                {
+                    // Handle the case where the user doesn't have any roles
+                    return View("NoAccess");
+                }
             }
             return RedirectToAction("Index", "Home");
         }

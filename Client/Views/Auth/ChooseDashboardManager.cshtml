@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Choose Dashboard";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Choose Your Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Please Choose Dashboard</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <button type="button" class="btn btn-primary btn-block" onclick="location.href='/Employee/Dashboard'">Employee</button>
+                    <br>
+                    <button type="button" class="btn btn-primary btn-block" onclick="location.href='/Manager/Dashboard'">Manager</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#myModal").modal('show');
+        });
+    </script>
+
+</body>
+</html>
