@@ -1,8 +1,10 @@
 ﻿using Client.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Client.Controllers
 {
+    [Authorize(Roles = "Manager")]
     public class ManagerController : Controller
     {
 
@@ -35,6 +37,11 @@ namespace Client.Controllers
         }
 
         public IActionResult Employees()
+        {
+            return View();
+        }
+
+        public IActionResult RequestOvertime()
         {
             return View();
         }

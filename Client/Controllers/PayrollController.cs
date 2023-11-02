@@ -1,12 +1,14 @@
 ﻿using API.DTOs.Employees;
 using API.DTOs.PaymentDetails;
 using Client.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol.Core.Types;
 using System.Collections.Generic;
 
 namespace Client.Controllers
 {
+    [Authorize(Roles = "Payroll")]
     public class PayrollController : Controller
     {
         private readonly IPaymentDetailRepository _paymentDetailRepository;

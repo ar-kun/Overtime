@@ -1,8 +1,10 @@
 ﻿using Client.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Client.Controllers
 {
+    [Authorize(Roles = "Employee")]
     public class EmployeeController : Controller
     {
 
