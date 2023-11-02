@@ -284,9 +284,9 @@ namespace API.Controllers
                 var managerEmail = _employeeRepository.GetEmail(employee.ManagerGuid);
 
                 // Send Request to smtp
-                //_emailHandler.Send("Overtime Request", 
-                                    //    $"Hello sir, {string.Concat(employee.FirstName + " " + employee.LastName)} has just submitted a request for overtime and waiting for a response from you. Thank You :)",
-                                     //   managerEmail);
+                _emailHandler.Send("Overtime Request",
+                                        $"Hello sir, {string.Concat(employee.FirstName + " " + employee.LastName)} has just submitted a request for overtime and waiting for a response from you. Thank You :)",
+                                        managerEmail);
 
                 // Mengembalikan data Employee yang baru saja dibuat
                 return Ok(new ResponseOKHandler<OvertimeDto>((OvertimeDto)result));

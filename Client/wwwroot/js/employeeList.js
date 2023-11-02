@@ -44,7 +44,7 @@ $(document).ready(function () {
     $("#submitEmployee").click(function () {
         submitForm();
         return false;
-    });
+    }); 
 });
 
 // Function to handle form add employee
@@ -59,37 +59,27 @@ function submitForm() {
     emp.phoneNumber = $("#phoneNumber").val();
     emp.salary = $("#salary").val();
     emp.password = $("#password").val();
-    emp.managerNik = $("#managerNik").val();
+    emp.confirmPassword = $("#passwordConfirmation").val();
+    emp.managerGuid = $("#managerGuid").val();
     let jsonString = JSON.stringify(emp);
     console.log(jsonString);
 
     $.ajax({
-        url: "https://localhost:7290/api/Employee",
+        url: "https://localhost:7166/api/Account/register",
         type: "POST",
         cache: false,
         data: jsonString,
         contentType: "application/json"
     }).done((result) => {
-        // Hide Modal
-        $("#employee-modal").modal('hide');
+        // Save the success message in localStorage
+        localStorage.setItem("successMessage", "Create Employee Account Success");
 
-        // Refresh table
-        $('#employee-table').DataTable().ajax.reload();
-
-        // Success Alert
-        Swal.fire({
-            icon: 'success',
-            title: result.message,
-            showConfirmButton: false,
-            timer: 1300
-        });
-
-        //$("#successAlert").text(result.message).show();
+        // Redirect to Index page
+        window.location.href = '/manager/employees';
     }).fail((jqXHR, textStatus, errorThrown) => {
         let alertMsg = jqXHR.responseJSON.message;
 
         // Fail Alert
         Swal.fire('Failed to create', alertMsg, 'warning');
-        //$("#add-fail").text(alertMsg).show();
     });
 }

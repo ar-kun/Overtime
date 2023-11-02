@@ -13,7 +13,8 @@ namespace API.DTOs.Accounts
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public int Salary { get; set; }
-        public string? ManagerNik { get; set; }
+        //public string? ManagerNik { get; set; }
+        public Guid ManagerGuid { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
     }
