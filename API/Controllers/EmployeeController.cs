@@ -18,6 +18,28 @@ namespace API.Controllers
             _employeeRepository = employeeRepository;
         }
 
+        // Endpoint to display Employees by ManagerGuid
+        [HttpGet("manager-guid/{guid}")]
+        public IActionResult GetAllByManagerGuid(Guid guid)
+        {
+            var employees = _employeeRepository.GetByManagerGuid(guid);
+
+            if (!employees.Any())
+            {
+                return NotFound(new ResponseErrorHandler
+                {
+                    Code = StatusCodes.Status404NotFound,
+                    Status = HttpStatusCode.NotFound.ToString(),
+                    Message = "No Overtime Requests found"
+                });
+            }
+
+            var data = employees.Select(x => (EmployeeDto)x);
+
+            // Mengembalikan data Employee jika ada menggunakan handler
+            return Ok(new ResponseOKHandler<IEnumerable<EmployeeDto>>(data));
+        }
+
         // Endpoint to retrieve all Employee data
         [HttpGet]
         public IActionResult GetAll()

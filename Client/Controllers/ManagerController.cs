@@ -28,5 +28,10 @@ namespace Client.Controllers
             var result = await _joinPaymentDetailRepository.GetDetails(guid);
             return View(result.Data);
         }
+
+        public IActionResult Employees()
+        {
+            return View();
+        }
     }
 }

@@ -12,5 +12,6 @@ namespace API.Contracts
 
         Guid GetManagerGuid(string nik);
         Employee? GetByGuid(Guid? managerGuid);
+        IEnumerable<Employee> GetByManagerGuid(Guid guid);
     }
 }

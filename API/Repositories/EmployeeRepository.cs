@@ -61,5 +61,12 @@ namespace API.Repositories
             _context.ChangeTracker.Clear();
             return entity;
         }
+
+        public IEnumerable<Employee> GetByManagerGuid(Guid guid)
+        {
+            return _context.Set<Employee>()
+                .Where(e => e.ManagerGuid == guid)
+                .ToList();
+        }
     }
 }
