@@ -29,11 +29,26 @@ $(document).ready(function () {
             'colvis',
         ],
         columns: [
-            { "data": "dateRequest" },
-            { "data": "duration" },
+            {
+                "data": "dateRequest",
+                render: function (data, type, row) {
+                    return `${formatDate(row.dateRequest)}`;
+                }
+            },
+            {
+                "data": "duration",
+                render: function (data, type, row) {
+                    return `${row.duration} hours`;
+                }
+            },
             { "data": "status" },
+            {
+                "data": "typeOfDay",
+                render: function (data, type, row) {
+                    return `${formatTypeOfDay(row.typeOfDay)}`;
+                }
+            },
             { "data": "remarks" },
-            { "data": "typeOfDay" },
             {
                 "data": null,
                 render: function (data, type, row) {
@@ -98,3 +113,21 @@ $(document).ready(function () {
         }
     });
 });
+
+// Convert format date
+function formatDate(inputDate) {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    const date = new Date(inputDate);
+    return date.toLocaleDateString('en-GB', options);
+}
+
+// Convert Type of Day String
+function formatTypeOfDay(typeOfDay) {
+    if (typeOfDay === "WeekDay") {
+        return "Week Day";
+    } else if (typeOfDay === "OffDay") {
+        return "Off Day";
+    } else {
+        return typeOfDay; // Mengembalikan nilainya tanpa perubahan
+    }
+}
