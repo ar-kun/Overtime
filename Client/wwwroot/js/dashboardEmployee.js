@@ -12,9 +12,10 @@ $.ajax({
         var totalPayMonthly = 0;
         var currentMonth = new Date().getMonth() + 1; // get the current month
         $.each(data.data, function (index, value) {
-            var dateRequest = new Date(value.dateRequest);
+            var dateRequest = new Date(value.overtimeDate);
             if (dateRequest.getMonth() + 1 === currentMonth) { // check if the month of dateRequest is equal to the current month
-                totalPayMonthly += value.totalPay;
+                var totalPay = value.totalPay.replace(/,00/, "");
+                totalPayMonthly += parseInt(totalPay.replace(/[^0-9]/g, ""));
             }
         });
         console.log('Total Pay:', totalPayMonthly); // log the total pay to the console
@@ -36,9 +37,11 @@ $.ajax({
         var totalPayAnnual = 0;
         var currentYear = new Date().getFullYear(); // get the current year
         $.each(data.data, function (index, value) {
-            var dateRequest = new Date(value.dateRequest);
+            var dateRequest = new Date(value.overtimeDate);
             if (dateRequest.getFullYear() === currentYear) { // check if the year of dateRequest is equal to the current year
-                totalPayAnnual += value.totalPay;
+                var totalPay = value.totalPay.replace(/,00/, "");
+                console.log(totalPay);
+                totalPayAnnual += parseInt(totalPay.replace(/[^0-9]/g, ""));
             }
         });
         console.log('Total Pay:', totalPayAnnual); // log the total pay to the console
@@ -125,9 +128,10 @@ $.ajax({
         var currentYear = new Date().getFullYear(); // get the current year
         var monthlyTotalPay = new Array(12).fill(0); // initialize an array of size 12 with 0s
         $.each(data.data, function (index, value) {
-            var dateRequest = new Date(value.dateRequest);
+            var dateRequest = new Date(value.overtimeDate);
             if (dateRequest.getFullYear() === currentYear) { // check if the year of dateRequest is equal to the current year
-                monthlyTotalPay[dateRequest.getMonth()] += value.totalPay; // add the totalPay to the corresponding month
+                var totalPay = value.totalPay.replace(/,00/, "");
+                monthlyTotalPay[dateRequest.getMonth()] += parseInt(totalPay.replace(/[^0-9]/g, "")); // add the totalPay to the corresponding month
             }
         });
         console.log(monthlyTotalPay);
