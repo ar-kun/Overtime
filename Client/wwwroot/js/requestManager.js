@@ -37,8 +37,18 @@
                     return date.toLocaleDateString('en-US', options);
                 }
             },
-            { "data": "duration" },
-            { "data": "typeOfDay" },
+            {
+                "data": "duration",
+                render: function (data, type, row) {
+                    return `${row.duration} hours`;
+                }
+            },
+            {
+                "data": "typeOfDay",
+                render: function (data, type, row) {
+                    return `${formatTypeOfDay(row.typeOfDay)}`;
+                }
+            },
             {
                 "data": "status",
                 "visible": false
@@ -117,3 +127,14 @@
         });
     });
 });
+
+// Convert Type of Day String
+function formatTypeOfDay(typeOfDay) {
+    if (typeOfDay === "WeekDay") {
+        return "Week Day";
+    } else if (typeOfDay === "OffDay") {
+        return "Off Day";
+    } else {
+        return typeOfDay; // Mengembalikan nilainya tanpa perubahan
+    }
+}
