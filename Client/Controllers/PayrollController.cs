@@ -18,15 +18,9 @@ namespace Client.Controllers
             _joinPaymentDetailRepository = joinPaymentDetailRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult Dashboard()
         {
             return View();
-        }
-
-        public async Task<JsonResult> GetPayrollList()
-        {
-            var result = await _joinPaymentDetailRepository.GetDetails();
-            return Json(result);
         }
 
         public async Task<IActionResult> Details(Guid guid)
