@@ -190,12 +190,10 @@ namespace API.Controllers
                         HiringDate = registerDto.HiringDate,
                         Email = registerDto.Email,
                         PhoneNumber = registerDto.PhoneNumber,
-                        Salary = registerDto.Salary
+                        Salary = registerDto.Salary,
+                        ManagerGuid = registerDto.ManagerGuid
                     };
                     employeeToCreate.Nik = GenerateHandler.GenerateNIK(_employeeRepository.GetLastNik());
-                    employeeToCreate.ManagerGuid = string.IsNullOrEmpty(registerDto.ManagerNik)
-                                                        ? null
-                                                        : _employeeRepository.GetManagerGuid(registerDto.ManagerNik);
 
                     var employeeResult = _employeeRepository.Create(employeeToCreate);
 
