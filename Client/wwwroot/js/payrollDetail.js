@@ -12,7 +12,7 @@ $(document).ready(function () {
     // Payroll Table
     $('#payrollTable').DataTable({
         ajax: {
-            url: "payroll/GetPayrollList/",
+            url: "https://localhost:7166/api/PaymentDetail/details",
             dataSrc: "data",
             dataType: "JSON"
         },

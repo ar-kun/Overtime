@@ -64,7 +64,7 @@ namespace Client.Controllers
         }
 
         // Dashboard
-        public IActionResult Dashboard()
+        public IActionResult All()
         {
             return View();
         }

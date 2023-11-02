@@ -26,7 +26,7 @@ $(document).ready(function () {
                     localStorage.setItem("successMessage", "Data Updated Successfully");
 
                     // Redirect to Index page
-                    window.location.href = '/payroll';
+                    window.location.href = '/payroll/all';
                 }).fail((jqXHR, textStatus, errorThrown) => {
                     let alertMsg = jqXHR.responseJSON.message;
 
