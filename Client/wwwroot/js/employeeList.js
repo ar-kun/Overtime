@@ -1,4 +1,14 @@
 $(document).ready(function () {
+    // Check if a success message exists in localStorage
+    const successMessage = localStorage.getItem("successMessage");
+
+    if (successMessage) {
+        // Display the success message
+        $("#successAlert").removeClass("hidden");
+        // Clear the success message from localStorage
+        localStorage.removeItem("successMessage");
+    }
+
     // Employees Table
     $('#employeesTable').DataTable({
         ajax: {
@@ -42,6 +52,7 @@ $(document).ready(function () {
 
     // Create Employee Account
     $("#submitEmployee").click(function () {
+        console.log("hello");
         submitForm();
         return false;
     }); 
