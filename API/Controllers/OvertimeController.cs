@@ -60,7 +60,7 @@ namespace API.Controllers
                 else if (overtime.Status == StatusLevel.OnGoing && overtime.DateRequest.Date < DateTime.Now.Date)
                 {
                     // Update the status to 'WaitingForPayment'
-                    overtime.Status = StatusLevel.OnGoing;
+                    overtime.Status = StatusLevel.WaitingForPayment;
                     _overtimeRepository.Update(overtime);
                 }
                 else if (overtime.Status == StatusLevel.Approved && overtime.DateRequest.Date == DateTime.Now.Date)
@@ -127,7 +127,7 @@ namespace API.Controllers
                 else if (overtime.Status == StatusLevel.OnGoing && overtime.DateRequest.Date < DateTime.Now.Date)
                 {
                     // Update the status to 'WaitingForPayment'
-                    overtime.Status = StatusLevel.OnGoing;
+                    overtime.Status = StatusLevel.WaitingForPayment;
                     _overtimeRepository.Update(overtime);
                 }
                 else if (overtime.Status == StatusLevel.Approved && overtime.DateRequest.Date == DateTime.Now.Date)
@@ -175,6 +175,33 @@ namespace API.Controllers
                     Status = HttpStatusCode.NotFound.ToString(),
                     Message = "No Overtime Requests found"
                 });
+            }
+
+            // Filter and update Overtimes Status
+            foreach (var overtime in employeeOvertimeRequests)
+            {
+                if (overtime.Status == StatusLevel.WaitingForPayment)
+                {
+                    // Update the status to 'Finished'
+                    var paymentDetail = _paymentDetailRepository.GetByGuid(overtime.Guid);
+                    if (paymentDetail.PaymentStatus == PaymentLevel.Paid)
+                    {
+                        overtime.Status = StatusLevel.Finished;
+                        _overtimeRepository.Update(overtime);
+                    }
+                }
+                else if (overtime.Status == StatusLevel.OnGoing && overtime.DateRequest.Date < DateTime.Now.Date)
+                {
+                    // Update the status to 'WaitingForPayment'
+                    overtime.Status = StatusLevel.WaitingForPayment;
+                    _overtimeRepository.Update(overtime);
+                }
+                else if (overtime.Status == StatusLevel.Approved && overtime.DateRequest.Date == DateTime.Now.Date)
+                {
+                    // Update the status to 'OnGoing'
+                    overtime.Status = StatusLevel.OnGoing;
+                    _overtimeRepository.Update(overtime);
+                }
             }
             var data = employeeOvertimeRequests.Select(x => (OvertimeDto)x);
             return Ok(new ResponseOKHandler<IEnumerable<OvertimeDto>>(data));

@@ -1,6 +1,4 @@
 $(document).ready(function () {
-    console.log(guidEmployee);
-
     // Payroll Table
     $('#payrollTable').DataTable({
         ajax: {

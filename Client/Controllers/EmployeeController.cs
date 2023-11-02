@@ -23,6 +23,11 @@ namespace Client.Controllers
             return View();
         }
 
+        public IActionResult MyOvertime()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> PayrollDetails(Guid guid)
         {
             var result = await _joinPaymentDetailRepository.GetDetails(guid);
