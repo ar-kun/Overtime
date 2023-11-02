@@ -9,9 +9,52 @@
     <meta charset="utf-8" />
     <title>Choose Your Dashboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .my-button {
+            background-color: #163270;
+            color: #ffffff;
+            width: 200px;
+            box-shadow: 2px 2px 5px #888888;
+        }
+
+        .my-button:hover {
+            background-color: #1450A3;
+            color: #ffffff;
+        }
+
+        .modal-body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background-color: #EEEDED;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .modal-header {
+            background-color: #163270;
+            color: #ffffff;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .modal-content {
+            border-radius: 10px;
+        }
+
+        .modal-header .close {
+            color: #ffffff;
+        }
+    </style>
 </head>
 <body>
 
@@ -23,14 +66,14 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">Please Choose Dashboard</h4>
-                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <button type="button" class="close" data-dismiss="modal" onclick="window.location.href='/auth'">×</button>
                 </div>
 
                 <!-- Modal body -->
-                <div class="modal-body">
-                    <button type="button" class="btn btn-primary btn-block" onclick="location.href='/Employee/Dashboard'">Employee</button>
+                <div class="modal-body" id="modalBody">
+                    <button type="button" class="btn btn-block my-button" onclick="location.href='/Employee/Dashboard'">Employee</button>
                     <br>
-                    <button type="button" class="btn btn-primary btn-block" onclick="location.href='/Manager/Dashboard'">Manager</button>
+                    <button type="button" class="btn btn-block my-button" onclick="location.href='/Manager/Dashboard'">Manager</button>
                 </div>
 
             </div>
